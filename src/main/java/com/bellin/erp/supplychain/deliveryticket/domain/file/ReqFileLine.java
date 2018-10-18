@@ -13,7 +13,7 @@ public class ReqFileLine {
     //public ReqFileLine(int index, confObj){}
     public ReqFileLine(int index) {
         this.index = index;
-        // TODO
+        // TODO do this first, build out the config and this constructor.......
         // for every lineField in the config, this.reqFileLineFields.put(<fieldName>, new ReqFileLineField(fieldName,...))
     }
 
