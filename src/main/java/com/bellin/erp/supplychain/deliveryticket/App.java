@@ -29,16 +29,18 @@ public class App
         App app = new App();
 
         try {
-            app.runit(INPUT_FILE_NAME);
+            app.runit(args[0]);
         } catch (Exception e) {
             System.err.println(e);
         }
-
     }
 
-    public void runit(String fileName) {
-        ReqFile reqFile = new ReqFile();
-        reqFile.read(this.INPUT_FILE_NAME);
+    public void runit(String filePath) {
+        //ReqFile reqFile = new ReqFile();
+        //reqFile.read(this.INPUT_FILE_NAME);
+        System.err.println("this is an error");
+        System.out.println(filePath);
+        System.exit(0);
     }
 
 
