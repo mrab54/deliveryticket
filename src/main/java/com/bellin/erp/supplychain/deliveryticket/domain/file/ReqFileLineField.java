@@ -8,9 +8,10 @@ public class ReqFileLineField {
     //log
     private String value;
     private String name;
+    private int width;
 
 
-    private static final Map<String, Integer> FIELD_WIDTH_MAP = createMap();
+    public static final Map<String, Integer> FIELD_WIDTH_MAP = createMap();
 
     private static Map<String, Integer> createMap() {
         Map<String, Integer> result = new HashMap<String, Integer>();
@@ -39,8 +40,9 @@ public class ReqFileLineField {
         return Collections.unmodifiableMap(result);
     }
 
-    public ReqFileLineField(String name) {
+    public ReqFileLineField(String name, int width) {
         this.name = name;
+        this.width = width;
     }
 
     public void read(Map<String, String> lineMap) throws Exception{

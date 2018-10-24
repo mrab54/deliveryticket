@@ -19,7 +19,7 @@ import java.io.Reader;
  */
 public class App 
 {
-    final static String INPUT_FILE_NAME = ".\\res\\input\\0000015809.csv";
+    final static String INPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsdata-0000015809.csv";
     final static String OUTPUT_FILE_NAME = ".\\res\\output\\0000015809.txt";
 
     // [company, reqNumber, lineNumber, item, desc
@@ -29,15 +29,16 @@ public class App
         App app = new App();
 
         try {
-            app.runit(args[0]);
+            //app.runit(args[0]);
+            app.runit(INPUT_FILE_NAME);
         } catch (Exception e) {
             System.err.println(e);
         }
     }
 
     public void runit(String filePath) {
-        //ReqFile reqFile = new ReqFile();
-        //reqFile.read(this.INPUT_FILE_NAME);
+        ReqFile reqFile = new ReqFile();
+        reqFile.read(filePath);
         System.err.println("this is an error");
         System.out.println(filePath);
         System.exit(0);

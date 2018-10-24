@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ReqFile {
@@ -25,7 +26,8 @@ public class ReqFile {
 
     }
 
-    public void read(String filePath) {
+    private List<CSVRecord> getCSVRecords(String filePath) {
+        List<CSVRecord> csvRecords = null;
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(filePath), ENCODING);
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
@@ -33,31 +35,38 @@ public class ReqFile {
                         .withTrim()
                         .withDelimiter('|'));
         ) {
-            int index = 0;
-
-            for (CSVRecord csvRecord : csvParser) {
-                Map<String, String> lineMap = csvRecord.toMap();
-
-                //ReqFileLine reqFileLine = new ReqFileLine(index, confObj);
-                ReqFileLine reqFileLine = new ReqFileLine(index);
-                reqFileLine.read(lineMap);
-
-                /*
-                if (reqFileLine.isValid()) {
-                    this.reqFileLines.add(reqFileLine);
-                }
-                else {
-                    //TODO
-                    System.out.println();
-                }
-                */
-                this.reqFileLines.add(reqFileLine);
-
-                index++;
-            }
+            // Reading all records at once into memory
+            csvRecords = csvParser.getRecords();
         } catch (IOException e) {
             //TODO: err handle
             System.err.println(e);
+        }
+        return csvRecords;
+    }
+
+    private ReqFileLine createReqFileLine(CSVRecord csvRecord, int index) {
+        Map<String, String> lineMap = csvRecord.toMap();
+
+        ReqFileLine reqFileLine = new ReqFileLine(index);
+        reqFileLine.read(lineMap);
+
+        return reqFileLine;
+    }
+
+    public void read(String filePath) {
+
+        List<CSVRecord> csvRecords = this.getCSVRecords(filePath);
+
+        for (int i = 0; i < csvRecords.size(); i++) {
+
+            ReqFileLine reqFileLine = this.createReqFileLine(csvRecords.get(i), i);
+
+            if (reqFileLine.isValid()) {
+                this.reqFileLines.add(reqFileLine);
+            }
+            else {
+                // TODO - log this
+            }
         }
     }
 }

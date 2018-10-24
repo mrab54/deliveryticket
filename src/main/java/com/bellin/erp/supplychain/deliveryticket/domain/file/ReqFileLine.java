@@ -8,13 +8,13 @@ public class ReqFileLine {
     private int index;
     private Map<String, ReqFileLineField> reqFileLineFields = new TreeMap<String, ReqFileLineField>();
     //log
-    //confObj
 
-    //public ReqFileLine(int index, confObj){}
     public ReqFileLine(int index) {
         this.index = index;
-        // TODO do this first, build out the config and this constructor.......
-        // for every lineField in the config, this.reqFileLineFields.put(<fieldName>, new ReqFileLineField(fieldName,...))
+        for (String key : ReqFileLineField.FIELD_WIDTH_MAP.keySet()) {
+            ReqFileLineField rflf = new ReqFileLineField(key, ReqFileLineField.FIELD_WIDTH_MAP.get(key));
+            this.reqFileLineFields.put(key, rflf);
+        };
     }
 
     public void read(Map<String, String> lineMap) {
@@ -30,6 +30,11 @@ public class ReqFileLine {
         // // NOPE for k in lineMap
         // for k,v in reqFileLineFields
         //   v.read(lineMap)
+    }
+
+    public boolean isValid() {
+        // TODO - finish this
+        return true;
     }
 
 }
