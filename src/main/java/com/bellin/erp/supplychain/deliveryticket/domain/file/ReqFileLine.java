@@ -37,4 +37,8 @@ public class ReqFileLine {
         return true;
     }
 
+    public Map<String, ReqFileLineField> getReqFileLineFields() {
+        return this.reqFileLineFields;
+    }
+
 }

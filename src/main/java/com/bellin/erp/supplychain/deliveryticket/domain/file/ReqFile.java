@@ -18,13 +18,9 @@ public class ReqFile {
     final static Charset ENCODING = StandardCharsets.UTF_8;
 
     //log
-    //confObj
-    private ArrayList<ReqFileLine> reqFileLines = new ArrayList<ReqFileLine>();
+    private List<ReqFileLine> reqFileLines = new ArrayList<ReqFileLine>();
+    private String filePath;
 
-    //public ReqFile(confObj){}
-    public ReqFile(){
-
-    }
 
     private List<CSVRecord> getCSVRecords(String filePath) {
         List<CSVRecord> csvRecords = null;
@@ -55,6 +51,7 @@ public class ReqFile {
 
     public void read(String filePath) {
 
+        this.filePath = filePath;
         List<CSVRecord> csvRecords = this.getCSVRecords(filePath);
 
         for (int i = 0; i < csvRecords.size(); i++) {
@@ -68,5 +65,9 @@ public class ReqFile {
                 // TODO - log this
             }
         }
+    }
+
+    public List<ReqFileLine> getReqFileLines() {
+        return this.reqFileLines;
     }
 }

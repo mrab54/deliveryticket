@@ -1,5 +1,7 @@
 package com.bellin.erp.supplychain.deliveryticket.domain.file;
 
+import com.bellin.erp.supplychain.deliveryticket.report.ReportWriter;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,5 +55,10 @@ public class ReqFileLineField {
             // TODO
             throw new Exception("asdfsadf");
         }
+    }
+
+    public String toString() {
+        //return ReportWriter.padLeft(this.value, this.width);
+        return this.value;
     }
 }

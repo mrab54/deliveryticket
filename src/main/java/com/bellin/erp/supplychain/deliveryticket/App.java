@@ -2,6 +2,7 @@ package com.bellin.erp.supplychain.deliveryticket;
 
 
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFile;
+import com.bellin.erp.supplychain.deliveryticket.report.ReportWriter;
 import org.apache.commons.csv.*;
 
 import java.nio.file.Files;
@@ -39,6 +40,11 @@ public class App
     public void runit(String filePath) {
         ReqFile reqFile = new ReqFile();
         reqFile.read(filePath);
+
+        ReportWriter rw = new ReportWriter();
+        rw.writeDeliveryTicket(reqFile);
+
+
         System.err.println("this is an error");
         System.out.println(filePath);
         System.exit(0);
