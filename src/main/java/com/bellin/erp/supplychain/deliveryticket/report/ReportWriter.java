@@ -3,6 +3,7 @@ package com.bellin.erp.supplychain.deliveryticket.report;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFile;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFileLine;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFileLineField;
+import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedWriter;
@@ -91,9 +92,66 @@ public class ReportWriter {
         sb.append(padLeft(reqFileLineFieldMap.get("REQ_LOCATION").toString(), 25));
         sb.append(StringUtils.repeat(StringUtils.SPACE, 20));
         sb.append(padRight(reqFileLineFieldMap.get("REQ_NUMBER").toString(), 18));
-        sb.append(StringUtils.repeat(StringUtils.SPACE, 30));
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 14));
+        // TODO this should be Req loc name description. Add to query.
         sb.append(reqFileLineFieldMap.get("RQL_ADDR_1"));
         headerLines.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 89));
+        //sb.append(padLeft(reqFileLineFieldMap.get("RQL_ADDR_2").toString(), 106));
+        sb.append(reqFileLineFieldMap.get("RQL_ADDR_2").toString());
+        headerLines.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 89));
+        //sb.append(padLeft(reqFileLineFieldMap.get("RQL_CITY").toString(), 89));
+        sb.append(reqFileLineFieldMap.get("RQL_CITY").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 3));
+        sb.append(reqFileLineFieldMap.get("RQL_STATE").toString());
+        sb.append(StringUtils.SPACE);
+        sb.append(reqFileLineFieldMap.get("RQL_POSTAL_CODE"));
+        headerLines.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append("Destination: ");
+        sb.append(reqFileLineFieldMap.get("REQ_LOCATION").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 19));
+        // TODO get req loc description
+        sb.append("REQ_LOC_DESCRIPTION_PLACE_HOLDER");
+        //sb.append(reqFileLineFieldMap.get("REQ_LOC_DESCRIPTION"))
+        headerLines.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append("Requester: ");
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 21));
+        // TODO get requester description
+        sb.append("REQUESTER_DESCRIPTION_PLACEHOLDER");
+        //sb.append(reqFileLineFieldMap.get("REQUESTER_DESCRIPTION"));
+        headerLines.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append("Pick Bin  Line  Item Description");
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 18));
+        sb.append("Manufacturer Information");
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 3));
+        sb.append("Quantity To Pick Uom");
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 2));
+        sb.append("Shipped");
+        headerLines.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append("Putaway");
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 70));
+        sb.append("Unit Cost");
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 30));
+        sb.append("Extended Cost");
+        headerLines.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append("-------  ----  --------------------------------   -------------------------  ---------------- ---- ---------------  ---------------");
+        headerLines.add(sb.toString());
+        headerLines.add(StringUtils.EMPTY);
         sb.setLength(0);
 
         headerLines.add(sb.toString());
@@ -102,6 +160,15 @@ public class ReportWriter {
 
     private List<String> createReqLine(ReqFileLine reqFileLine) {
         List<String> reqLines = new ArrayList<>();
+        Map<String, ReqFileLineField> reqFileLineFieldMap = reqFileLine.getReqFileLineFields();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(reqFileLineFieldMap.get("PICK_FROM_BIN").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 7));
+        sb.append(reqFileLineFieldMap.get("LINE_NUMBER").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 2));
+        sb.append(reqFileLineFieldMap.get("ITEM").toString());
+        sb.append()
 
         return reqLines;
     }
