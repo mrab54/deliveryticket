@@ -20,8 +20,8 @@ import java.io.Reader;
  */
 public class App 
 {
-    //final static String INPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsdata-0000015809.csv";
-    final static String INPUT_FILE_NAME = "C:\\Users\\mrab\\dev\\code\\java\\deliveryticket\\whsdata-0000015809.csv";
+    final static String INPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsdata-0000015809.csv";
+    //final static String INPUT_FILE_NAME = "C:\\Users\\mrab\\dev\\code\\java\\deliveryticket\\whsdata-0000015809.csv";
     final static String OUTPUT_FILE_NAME = ".\\res\\output\\0000015809.txt";
 
     public static void main( String[] args )

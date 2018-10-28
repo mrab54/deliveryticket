@@ -168,7 +168,7 @@ public class ReportWriter {
         sb.append(reqFileLineFieldMap.get("LINE_NUMBER").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 2));
         sb.append(reqFileLineFieldMap.get("ITEM").toString());
-        sb.append()
+        //sb.append();
 
         return reqLines;
     }
