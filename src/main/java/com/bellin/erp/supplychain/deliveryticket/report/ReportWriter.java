@@ -27,7 +27,19 @@ public class ReportWriter {
 
     public void writeDeliveryTicket(ReqFile reqFile) {
 
+
+        List<String> reqLines = new ArrayList<>();
         List<String> headerLines = createHeader(reqFile, 1);
+
+        for (ReqFileLine reqLine : reqFile.getReqFileLines()) {
+            //List<String> newReqLines = createReqLine(reqLine);
+            //reqLines.addAll(newReqLines);
+            // keep reqLine counter and page number counter.
+            // for i = 0, i < reqFile.getReqFileLines.length; i++
+            // createHeader
+            // create 3 or 4 lines
+        }
+
         System.exit(0);
         // TODO
         String OUTPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsrpt-0000015809.txt";
@@ -114,6 +126,9 @@ public class ReportWriter {
         headerLines.add(sb.toString());
         sb.setLength(0);
 
+        headerLines.add(StringUtils.EMPTY);
+        headerLines.add(StringUtils.EMPTY);
+
         sb.append("Destination: ");
         sb.append(reqFileLineFieldMap.get("REQ_LOCATION").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 19));
@@ -124,12 +139,17 @@ public class ReportWriter {
         sb.setLength(0);
 
         sb.append("Requester: ");
+        // TODO add to query and CSV output
+        sb.append(reqFileLineFieldMap.get("REQUESTER").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 21));
         // TODO get requester description
         sb.append("REQUESTER_DESCRIPTION_PLACEHOLDER");
         //sb.append(reqFileLineFieldMap.get("REQUESTER_DESCRIPTION"));
         headerLines.add(sb.toString());
         sb.setLength(0);
+
+        headerLines.add(StringUtils.EMPTY);
+        headerLines.add(StringUtils.EMPTY);
 
         sb.append("Pick Bin  Line  Item Description");
         sb.append(StringUtils.repeat(StringUtils.SPACE, 18));
