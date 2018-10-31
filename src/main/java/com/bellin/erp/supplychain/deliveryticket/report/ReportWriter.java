@@ -3,7 +3,6 @@ package com.bellin.erp.supplychain.deliveryticket.report;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFile;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFileLine;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFileLineField;
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedWriter;
