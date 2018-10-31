@@ -93,40 +93,39 @@ public class ReportWriter {
         sb.append(StringUtils.repeat(StringUtils.SPACE, 20));
         sb.append(padRight(reqFileLineFieldMap.get("REQ_NUMBER").toString(), 18));
         sb.append(StringUtils.repeat(StringUtils.SPACE, 14));
-        // TODO this should be Req loc name description. Add to query.
-        sb.append(reqFileLineFieldMap.get("RQL_ADDR_1"));
+        sb.append(reqFileLineFieldMap.get("RQL_NAME").toString());
         headerLines.add(sb.toString());
         sb.setLength(0);
 
         sb.append(StringUtils.repeat(StringUtils.SPACE, 89));
-        //sb.append(padLeft(reqFileLineFieldMap.get("RQL_ADDR_2").toString(), 106));
+        sb.append(reqFileLineFieldMap.get("RQL_ADDR_1").toString());
+        headerLines.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 89));
         sb.append(reqFileLineFieldMap.get("RQL_ADDR_2").toString());
         headerLines.add(sb.toString());
         sb.setLength(0);
 
         sb.append(StringUtils.repeat(StringUtils.SPACE, 89));
-        //sb.append(padLeft(reqFileLineFieldMap.get("RQL_CITY").toString(), 89));
         sb.append(reqFileLineFieldMap.get("RQL_CITY").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 3));
         sb.append(reqFileLineFieldMap.get("RQL_STATE").toString());
         sb.append(StringUtils.SPACE);
-        sb.append(reqFileLineFieldMap.get("RQL_POSTAL_CODE"));
+        sb.append(reqFileLineFieldMap.get("RQL_POSTAL_CODE").toString());
         headerLines.add(sb.toString());
         sb.setLength(0);
 
         sb.append("Destination: ");
         sb.append(reqFileLineFieldMap.get("REQ_LOCATION").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 19));
-        // TODO get req loc description
-        sb.append(reqFileLineFieldMap.get("RQL_NAME"));
+        sb.append(reqFileLineFieldMap.get("RQL_NAME").toString());
         headerLines.add(sb.toString());
         sb.setLength(0);
 
         sb.append("Requester: ");
         sb.append(StringUtils.repeat(StringUtils.SPACE, 21));
-        // TODO get requester description
-        sb.append("REQUESTER_DESCRIPTION_PLACEHOLDER");
-        //sb.append(reqFileLineFieldMap.get("REQUESTER_DESCRIPTION"));
+        sb.append(reqFileLineFieldMap.get("REQUESTER_NAME").toString());
         headerLines.add(sb.toString());
         sb.setLength(0);
 
