@@ -43,6 +43,7 @@ public class ReqFileLineField {
         result.put("RQL_NAME", 30);
         result.put("COMPANY_NAME", 30);
         result.put("FROM_LOCATION_NAME", 30);
+        result.put("REQUESTER_NAME", 30);
         return Collections.unmodifiableMap(result);
     }
 
