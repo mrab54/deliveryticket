@@ -118,8 +118,7 @@ public class ReportWriter {
         sb.append(reqFileLineFieldMap.get("REQ_LOCATION").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 19));
         // TODO get req loc description
-        sb.append("REQ_LOC_DESCRIPTION_PLACE_HOLDER");
-        //sb.append(reqFileLineFieldMap.get("REQ_LOC_DESCRIPTION"))
+        sb.append(reqFileLineFieldMap.get("RQL_NAME"));
         headerLines.add(sb.toString());
         sb.setLength(0);
 

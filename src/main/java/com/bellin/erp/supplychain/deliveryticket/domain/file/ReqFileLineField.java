@@ -32,13 +32,17 @@ public class ReqFileLineField {
         result.put("PICK_FROM_BIN", 7);
         result.put("PUT_AWAY_BIN", 7);
         result.put("SHIPMENT_NUMBER", 10);
-        result.put("CREATED_BY", 10);
+        result.put("CREATED_BY", 40);
         result.put("REQ_LOCATION", 5);
         result.put("RQL_ADDR_1", 30);
         result.put("RQL_ADDR_2", 30);
         result.put("RQL_CITY", 18);
         result.put("RQL_STATE", 2);
         result.put("RQL_POSTAL_CODE", 10);
+        //
+        result.put("RQL_NAME", 30);
+        result.put("COMPANY_NAME", 30);
+        result.put("FROM_LOCATION_NAME", 30);
         return Collections.unmodifiableMap(result);
     }
 
