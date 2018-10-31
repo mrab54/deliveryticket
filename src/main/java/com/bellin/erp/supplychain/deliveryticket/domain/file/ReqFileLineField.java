@@ -39,11 +39,11 @@ public class ReqFileLineField {
         result.put("RQL_CITY", 18);
         result.put("RQL_STATE", 2);
         result.put("RQL_POSTAL_CODE", 10);
-        //
         result.put("RQL_NAME", 30);
         result.put("COMPANY_NAME", 30);
         result.put("FROM_LOCATION_NAME", 30);
         result.put("REQUESTER_NAME", 30);
+        result.put("REQUESTER", 10);
         return Collections.unmodifiableMap(result);
     }
 

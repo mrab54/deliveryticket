@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -23,26 +24,66 @@ public class ReportWriter {
     final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     final static int pageWidth = 130;
     final static int pageHeight = 58;
+    final static int reqLinesPerPage = 10;
     final static Charset ENCODING = StandardCharsets.UTF_8;
 
     public void writeDeliveryTicket(ReqFile reqFile) {
+        List<List<String>> reqLines = new ArrayList<>();
 
-        List<String> headerLines = createHeader(reqFile, 1);
-        System.exit(0);
-        // TODO
-        String OUTPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsrpt-0000015809.txt";
+        for (ReqFileLine reqLine : reqFile.getReqFileLines()) {
+            List<String> newReqLine = createReqLine(reqLine);
+            reqLines.add(newReqLine);
+        }
+
+        int reqLinesRemaining = reqLines.size();
+        int curReqLinesOnPage = 0;
+        int curPage = 1;
+        int curReqLine = 0;
+
+        //String OUTPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsrpt-0000015809.txt";
+        String OUTPUT_FILE_NAME = "C:\\Users\\mrab\\dev\\code\\java\\deliveryticket\\whsrpt-0000015809.txt";
 
         Path path = Paths.get(OUTPUT_FILE_NAME);
-        try (BufferedWriter writer = Files.newBufferedWriter(path, this.ENCODING)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(path, ENCODING)) {
+
+            while (reqLinesRemaining > 0) {
+                if (curReqLinesOnPage == 0) {
+                    List<String> headerLines = createHeader(reqFile, curPage);
+                    for (String line : headerLines) {
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                }
+
+                if (curReqLinesOnPage < 10) {
+                    List<String> reqLine = reqLines.get(curReqLine);
+                    for (String line : reqLine) {
+                        writer.write(line);
+                        writer.newLine();
+                        writer.newLine();
+                    }
+                    curReqLinesOnPage += 1;
+                    reqLinesRemaining -= 1;
+                    curReqLine += 1;
+                }
+                else {
+                    curReqLinesOnPage = 0;
+                    curPage += 1;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+
+
+        System.exit(0);
+        // TODO
             /*
             for (String line : lines) {
                 writer.write(line);
                 writer.newLine();
             }
             */
-        } catch (IOException e) {
-            System.err.println(e);
-        }
     }
 
     public static String padRight(String s, int n) {
@@ -116,6 +157,9 @@ public class ReportWriter {
         headerLines.add(sb.toString());
         sb.setLength(0);
 
+        headerLines.add(StringUtils.EMPTY);
+        headerLines.add(StringUtils.EMPTY);
+
         sb.append("Destination: ");
         sb.append(reqFileLineFieldMap.get("REQ_LOCATION").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 19));
@@ -124,10 +168,15 @@ public class ReportWriter {
         sb.setLength(0);
 
         sb.append("Requester: ");
+        // TODO add to query and CSV output
+        sb.append(reqFileLineFieldMap.get("REQUESTER").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 21));
         sb.append(reqFileLineFieldMap.get("REQUESTER_NAME").toString());
         headerLines.add(sb.toString());
         sb.setLength(0);
+
+        headerLines.add(StringUtils.EMPTY);
+        headerLines.add(StringUtils.EMPTY);
 
         sb.append("Pick Bin  Line  Item Description");
         sb.append(StringUtils.repeat(StringUtils.SPACE, 18));
@@ -150,15 +199,19 @@ public class ReportWriter {
         sb.append("-------  ----  --------------------------------   -------------------------  ---------------- ---- ---------------  ---------------");
         headerLines.add(sb.toString());
         headerLines.add(StringUtils.EMPTY);
-        sb.setLength(0);
-
-        headerLines.add(sb.toString());
         return headerLines;
     }
 
     private List<String> createReqLine(ReqFileLine reqFileLine) {
-        List<String> reqLines = new ArrayList<>();
+        List<String> reqLine = new ArrayList<>();
         Map<String, ReqFileLineField> reqFileLineFieldMap = reqFileLine.getReqFileLineFields();
+
+        String unitCost = reqFileLineFieldMap.get("UNIT_COST").toString();
+        String quantity = reqFileLineFieldMap.get("QUANTITY").toString();
+        BigDecimal unitCostDecimal = new BigDecimal(unitCost);
+        BigDecimal quantityDecimal = new BigDecimal(quantity);
+        BigDecimal extendedCostDecimal = unitCostDecimal.multiply(quantityDecimal);
+        extendedCostDecimal = extendedCostDecimal.setScale(4, BigDecimal.ROUND_HALF_UP);
 
         StringBuilder sb = new StringBuilder();
         sb.append(reqFileLineFieldMap.get("PICK_FROM_BIN").toString());
@@ -166,8 +219,40 @@ public class ReportWriter {
         sb.append(reqFileLineFieldMap.get("LINE_NUMBER").toString());
         sb.append(StringUtils.repeat(StringUtils.SPACE, 2));
         sb.append(reqFileLineFieldMap.get("ITEM").toString());
-        //sb.append();
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 40));
+        // TODO get item manufacturing info 1
+        sb.append("Manufacturer Information 1");
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 20));
+        sb.append(quantity);
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 2));
+        sb.append(reqFileLineFieldMap.get("ENTERED_UOM").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 2));
+        sb.append(StringUtils.repeat("_", 15));
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 2));
+        sb.append(StringUtils.repeat("_", 15));
+        reqLine.add(sb.toString());
+        sb.setLength(0);
 
-        return reqLines;
+        sb.append(reqFileLineFieldMap.get("PUT_AWAY_BIN").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 9));
+        sb.append(reqFileLineFieldMap.get("DESCRIPTION_1").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 4));
+        // TODO get item manufacturing info 1
+        //sb.append(reqFileLineFieldMap.get("MANUFACTURE_2").toString());
+        sb.append("Manufacturer Information 2");
+        reqLine.add(sb.toString());
+        sb.setLength(0);
+
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 16));
+        sb.append(reqFileLineFieldMap.get("DESCRIPTION_2").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 16));
+        sb.append(reqFileLineFieldMap.get("LONG_DESCRIPTION").toString());
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 4));
+        sb.append(unitCost);
+        sb.append(StringUtils.repeat(StringUtils.SPACE, 20));
+        sb.append(extendedCostDecimal);
+        reqLine.add(sb.toString());
+
+        return reqLine;
     }
 }
