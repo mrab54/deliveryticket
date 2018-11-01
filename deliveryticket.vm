@@ -1,2 +1,0 @@
-Hello $display.cell($person.name, $person.width)! Welcome to Velocity!
-Hello $display.cell($person.name, $person.width)! Welcome to Velocity!
