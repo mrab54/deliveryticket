@@ -43,7 +43,7 @@ public class ReportWriter {
         Map<String, String> reqLineMap;
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 1; i < reqFileLines.size(); i++) {
+        for (int i = 0; i < reqFileLines.size(); i++) {
             if (i % 10 == 0) {
 
                 // Get headerMap
@@ -130,7 +130,7 @@ public class ReportWriter {
         }
 
         */
-
+        System.out.println(sb.toString());
         System.exit(0);
         // TODO
             /*
@@ -231,7 +231,7 @@ public class ReportWriter {
 
         return header;
     }
-
+    /*
     private List<String> createHeader(ReqFile reqFile, int pageNumber) {
         List<String> headerLines = new ArrayList<>();
         String timeStamp = dateFormat.format(Calendar.getInstance().getTime());
@@ -393,4 +393,5 @@ public class ReportWriter {
 
         return reqLine;
     }
+    */
 }

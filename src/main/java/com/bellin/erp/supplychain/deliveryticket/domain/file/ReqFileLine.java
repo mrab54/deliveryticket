@@ -19,7 +19,7 @@ public class ReqFileLine {
 
     public void read(Map<String, String> lineMap) {
         for (Map.Entry<String, ReqFileLineField> entry : this.reqFileLineFields.entrySet()) {
-            ReqFileLineField lineField = (ReqFileLineField) entry.getValue();
+            ReqFileLineField lineField = entry.getValue();
             try {
                 lineField.read(lineMap);
             } catch (Exception e){
