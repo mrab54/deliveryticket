@@ -4,8 +4,10 @@ package com.bellin.erp.supplychain.deliveryticket;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFile;
 import com.bellin.erp.supplychain.deliveryticket.report.ReportWriter;
 import org.apache.commons.csv.*;
+import org.apache.commons.lang3.StringUtils;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -41,8 +43,18 @@ public class App
         ReqFile reqFile = new ReqFile();
         reqFile.read(filePath);
 
+        String outputFilename = "";
+        Path inFilePath = Paths.get(filePath);
+        Path inFileName = inFilePath.getFileName();
+        Path inFileParentPath = inFilePath.getParent();
+
+        String shipmentNumber = StringUtils.remove(inFileName.toString(), ".csv");
+        shipmentNumber = StringUtils.remove(shipmentNumber, "whsdata-");
+
+        String outFilePath = inFileParentPath.toString() + "\\whsrpt-" + shipmentNumber + ".txt";
+
         ReportWriter rw = new ReportWriter();
-        rw.writeDeliveryTicket(reqFile);
+        rw.writeDeliveryTicket(reqFile, outFilePath);
 
 
         System.err.println("this is an error");

@@ -12,6 +12,7 @@ Requester: $REQUESTER.trim()                 PROCUREMENT AND LOGISTICS
 Requested By: $CREATED_BY.trim()
 
 
-Pick Bin  Line  Item Description          Manufacturer Information   Quantity To Pick Uom  Shipped
+Pick Bin  Line  Item Description                  Manufacturer Information   Quantity To Pick Uom  Shipped
 Putaway                                                                      Unit Cost                              Extended Cost
 -------  ----  --------------------------------   -------------------------  ---------------- ---- ---------------  --------------
+
