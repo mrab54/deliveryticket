@@ -29,8 +29,8 @@ public class TemplateTest {
         VelocityContext context = new VelocityContext();
         //context.put("name", "World");
         //Person p = new Person("Bob   ", 10);
-        Person p = new Person("   Bob", 10);
-        context.put("person", p);
+        //Person p = new Person("   Bob", 10);
+        //context.put("person", p);
         context.put("display", new DisplayTool());
         StringWriter writer = new StringWriter();
         t.merge(context, writer);

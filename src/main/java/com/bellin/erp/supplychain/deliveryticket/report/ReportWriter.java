@@ -4,9 +4,14 @@ import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFile;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFileLine;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFileLineField;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.tools.generic.DisplayTool;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -14,10 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ReportWriter {
     final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -27,6 +29,49 @@ public class ReportWriter {
     final static Charset ENCODING = StandardCharsets.UTF_8;
 
     public void writeDeliveryTicket(ReqFile reqFile) {
+
+        String timeStamp = dateFormat.format(Calendar.getInstance().getTime());
+        VelocityEngine ve = new VelocityEngine();
+        ve.init();
+        Template t = ve.getTemplate("deliveryticket.vm");
+        VelocityContext context = new VelocityContext();
+
+
+        List<ReqFileLine> reqFileLines = reqFile.getReqFileLines();
+
+        int curPageNum = 0;
+        Map<String, String> headerMap = new HashMap<>();
+        List<Map<String, String>> reqLines = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i < reqFileLines.size(); i++) {
+            if (i % 10 == 0) {
+                curPageNum += 1;
+                //private Map<String, String> getHeaderMap(ReqFile reqFile, String timeStamp, int pageNumber) {
+                headerMap = getHeaderMap(reqFile, timeStamp, curPageNum);
+                reqLines = new ArrayList<Map<String, String>>();
+            }
+
+
+        }
+
+
+
+
+
+
+
+        //context.put("name", "World");
+        //Person p = new Person("Bob   ", 10);
+        //Person p = new Person("   Bob", 10);
+        //context.put("person", p);
+
+        context.put("display", new DisplayTool());
+        StringWriter writer = new StringWriter();
+        t.merge(context, writer);
+        System.out.println(writer.toString());
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         List<List<String>> reqLines = new ArrayList<>();
 
         for (ReqFileLine reqLine : reqFile.getReqFileLines()) {
@@ -91,6 +136,76 @@ public class ReportWriter {
 
     public static String padLeft(String s, int n) {
         return String.format("%1$" + n + "s", s);
+    }
+
+    private Map<String, String> getHeaderMap(ReqFile reqFile, String timeStamp, int pageNumber) {
+        Map<String, String> header = new HashMap<>();
+        //String timeStamp = dateFormat.format(Calendar.getInstance().getTime());
+        Map<String, ReqFileLineField> rflfs = reqFile.getReqFileLines().get(0).getReqFileLineFields();
+
+        // TODO include timestamp
+        /*
+        ReqFileLineField company = rflfs.get("COMPANY");
+        header.put("COMPANY", padLeft(company.toString(), company.getWidth()));
+
+        ReqFileLineField fromLocation = rflfs.get("FROM_LOCATION");
+        header.put("FROM_LOCATION", padLeft(fromLocation.toString(), fromLocation.getWidth()));
+
+        ReqFileLineField companyName = rflfs.get("COMPANY_NAME");
+        header.put("COMPANY_NAME", padLeft(companyName.toString(), companyName.getWidth()));
+
+        ReqFileLineField fromLocationName = rflfs.get("FROM_LOCATION_NAME");
+        header.put("FROM_LOCATION_NAME", padLeft(fromLocationName.toString(), fromLocationName.getWidth()));
+
+        //TODO note this somehow
+        header.put("PAGE_NUMBER", padLeft(String.valueOf(pageNumber), 10));
+
+        ReqFileLineField shipmentNumber = rflfs.get("SHIPMENT_NUMBER");
+        header.put("SHIPMENT_NUMBER", padLeft(shipmentNumber.toString(), shipmentNumber.getWidth()));
+
+        ReqFileLineField reqLocation = rflfs.get("REQ_LOCATION");
+        header.put("REQ_LOCATION", padLeft(reqLocation.toString(), reqLocation.getWidth()));
+
+        ReqFileLineField reqNumber = rflfs.get("REQ_NUMBER");
+        header.put("REQ_NUMBER", padLeft(reqNumber.toString(), reqNumber.getWidth()));
+
+        ReqFileLineField rqlName = rflfs.get("RQL_NAME");
+        header.put("RQL_NAME", padLeft(rqlName.toString(), rqlName.getWidth()));
+
+        ReqFileLineField rqlAddr1 = rflfs.get("RQL_ADDR_1");
+        header.put("RQL_ADDR_1", padLeft(rqlAddr1.toString(), rqlAddr1.getWidth()));
+
+        ReqFileLineField rqlAddr2 = rflfs.get("RQL_ADDR_2");
+        header.put("RQL_ADDR_2", padLeft(rqlAddr2.toString(), rqlAddr2.getWidth()));
+
+        ReqFileLineField rqlCity = rflfs.get("RQL_CITY");
+        header.put("RQL_CITY", padLeft(rqlCity.toString(), rqlCity.getWidth()));
+
+        ReqFileLineField rqlState = rflfs.get("RQL_STATE");
+        header.put("RQL_STATE", padLeft(rqlState.toString(), rqlState.getWidth()));
+
+        ReqFileLineField rqlPostalCode = rflfs.get("RQL_POSTAL_CODE");
+        header.put("RQL_POSTAL_CODE", padLeft(rqlPostalCode.toString(), rqlPostalCode.getWidth()));
+
+        ReqFileLineField requester = rflfs.get("REQUESTER");
+        header.put("REQUESTER", padLeft(requester.toString(), requester.getWidth()));
+
+        ReqFileLineField requesterName = rflfs.get("REQUESTER_NAME");
+        header.put("REQUESTER_NAME", padLeft(rqlState.toString(), rqlState.getWidth()));
+
+        // TODO check on this for "Destination" is this equivalent
+        //ReqFileLineField reqLocation = rflfs.get("REQ_LOCATION");
+        //header.put("REQ_LOCATION", padLeft(reqLocation.toString(), reqLocation.getWidth()));
+        */
+
+        for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
+            header.put(entry.getKey(), padLeft(entry.getValue().toString(), entry.getValue().getWidth()));
+        }
+
+        header.put("PAGE_NUMBER", padLeft(String.valueOf(pageNumber), 10));
+        header.put("TIMESTAMP", padLeft(String.valueOf(timeStamp), 19));
+
+        return header;
     }
 
     private List<String> createHeader(ReqFile reqFile, int pageNumber) {

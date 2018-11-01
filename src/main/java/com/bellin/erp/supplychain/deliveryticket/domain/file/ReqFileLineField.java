@@ -62,8 +62,19 @@ public class ReqFileLineField {
         }
     }
 
+    public int getWidth(){
+        return this.width;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getValue() {
+        return this.value;
+    }
+
     public String toString() {
-        //return ReportWriter.padLeft(this.value, this.width);
         return this.value;
     }
 }
