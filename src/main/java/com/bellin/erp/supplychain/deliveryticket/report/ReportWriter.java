@@ -30,6 +30,8 @@ public class ReportWriter {
 
     public void writeDeliveryTicket(ReqFile reqFile) {
 
+        //String OUTPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsrpt-0000015809.txt";
+        String OUTPUT_FILE_NAME = "C:\\Users\\mrab\\dev\\code\\java\\deliveryticket\\whsrpt-0000015809.txt";
         String timeStamp = dateFormat.format(Calendar.getInstance().getTime());
         VelocityEngine ve = new VelocityEngine();
         ve.init();
@@ -45,23 +47,23 @@ public class ReportWriter {
 
         for (int i = 0; i < reqFileLines.size(); i++) {
             if (i % 10 == 0) {
+                curPageNum += 1;
 
                 // Get headerMap
                 headerMap = getHeaderMap(reqFile, timeStamp, curPageNum);
 
                 // write to string via template
                 VelocityContext context = new VelocityContext();
-                StringWriter writer = new StringWriter();
+                StringWriter stringWriter = new StringWriter();
 
                 for (Map.Entry<String, String> entry : headerMap.entrySet()) {
                     context.put(entry.getKey(), entry.getValue());
                 }
 
                 // sb.append that string
-                headerTemplate.merge(context, writer);
-                sb.append(writer.toString());
+                headerTemplate.merge(context, stringWriter);
+                sb.append(stringWriter.toString());
 
-                curPageNum += 1;
 
                 // TODO if curPageNum != 1, sb.append newline and formfeed character
 
@@ -69,76 +71,26 @@ public class ReportWriter {
             reqLineMap = getReqLineMap(reqFileLines.get(i));
 
             VelocityContext context = new VelocityContext();
-            StringWriter writer = new StringWriter();
+            StringWriter stringWriter = new StringWriter();
 
             for (Map.Entry<String, String> entry : reqLineMap.entrySet()) {
                 context.put(entry.getKey(), entry.getValue());
             }
 
             // write to string via template and sb.append
-            reqLineTemplate.merge(context, writer);
-            sb.append(writer.toString());
+            reqLineTemplate.merge(context, stringWriter);
+            sb.append(stringWriter.toString());
         }
-        //context.put("display", new DisplayTool());
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /*
-        List<List<String>> reqLines = new ArrayList<>();
-
-        for (ReqFileLine reqLine : reqFile.getReqFileLines()) {
-            List<String> newReqLine = createReqLine(reqLine);
-            reqLines.add(newReqLine);
-        }
-
-        int reqLinesRemaining = reqLines.size();
-        int curReqLinesOnPage = 0;
-        int curPage = 1;
-        int curReqLine = 0;
-
-        //String OUTPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsrpt-0000015809.txt";
-        String OUTPUT_FILE_NAME = "C:\\Users\\mrab\\dev\\code\\java\\deliveryticket\\whsrpt-0000015809.txt";
 
         Path path = Paths.get(OUTPUT_FILE_NAME);
-        try (BufferedWriter writer = Files.newBufferedWriter(path, ENCODING)) {
-
-            while (reqLinesRemaining > 0) {
-                if (curReqLinesOnPage == 0) {
-                    List<String> headerLines = createHeader(reqFile, curPage);
-                    for (String line : headerLines) {
-                        writer.write(line);
-                        writer.newLine();
-                    }
-                }
-
-                if (curReqLinesOnPage < 10) {
-                    List<String> reqLine = reqLines.get(curReqLine);
-                    for (String line : reqLine) {
-                        writer.write(line);
-                        writer.newLine();
-                        writer.newLine();
-                    }
-                    curReqLinesOnPage += 1;
-                    reqLinesRemaining -= 1;
-                    curReqLine += 1;
-                }
-                else {
-                    curReqLinesOnPage = 0;
-                    curPage += 1;
-                }
-            }
+        try (BufferedWriter fileWriter = Files.newBufferedWriter(path, ENCODING)) {
+            fileWriter.write(sb.toString());
         } catch (IOException e) {
             System.err.println(e);
         }
 
-        */
         System.out.println(sb.toString());
         System.exit(0);
-        // TODO
-            /*
-            for (String line : lines) {
-                writer.write(line);
-                writer.newLine();
-            }
-            */
     }
 
     public static String padRight(String s, int n) {
