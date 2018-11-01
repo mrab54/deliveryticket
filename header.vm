@@ -1,0 +1,17 @@
+2018-12-30 23:59:59			300 - BELLIN HOSPITAL	CS - DISTRIBUTION				 Page		1
+							Delivery Ticket
+
+
+Shipment	Requesting Location	Requisition Number
+  12345		3035			23456					  CLINICAL DECISION UNIT CDU
+										  744 S WEBSTER AVE
+										  5TH FLOOR
+										  GREEN BAY	WI 54301
+Destination: 3035		CLINICAL DECISION UNIT CDU
+Requester: 4530			PROCUREMENT AND LOGISTICS
+Requested By: Mike Rabas
+
+
+Pick Bin  Line  Item Description		  Manufacturer Information   Quantity To Pick Uom  Shipped
+Putaway                                                                      Unit Cost                              Extended Cost
+-------  ----  --------------------------------   -------------------------  ---------------- ---- ---------------  ---------------

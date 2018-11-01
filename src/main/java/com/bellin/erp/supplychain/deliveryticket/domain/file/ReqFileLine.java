@@ -25,6 +25,7 @@ public class ReqFileLine {
             } catch (Exception e){
                 //TODO
                 System.err.println("asdf");
+                System.err.println(e);
             }
         }
         // // NOPE for k in lineMap

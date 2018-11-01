@@ -33,45 +33,55 @@ public class ReportWriter {
         String timeStamp = dateFormat.format(Calendar.getInstance().getTime());
         VelocityEngine ve = new VelocityEngine();
         ve.init();
-        Template t = ve.getTemplate("deliveryticket.vm");
-        VelocityContext context = new VelocityContext();
-
+        Template headerTemplate = ve.getTemplate("header.vm");
+        Template reqLineTemplate = ve.getTemplate("reqline.vm");
 
         List<ReqFileLine> reqFileLines = reqFile.getReqFileLines();
 
         int curPageNum = 0;
-        Map<String, String> headerMap = new HashMap<>();
-        List<Map<String, String>> reqLines = new ArrayList<>();
+        Map<String, String> headerMap;
+        Map<String, String> reqLineMap;
         StringBuilder sb = new StringBuilder();
 
         for (int i = 1; i < reqFileLines.size(); i++) {
             if (i % 10 == 0) {
-                curPageNum += 1;
-                //private Map<String, String> getHeaderMap(ReqFile reqFile, String timeStamp, int pageNumber) {
+
+                // Get headerMap
                 headerMap = getHeaderMap(reqFile, timeStamp, curPageNum);
-                reqLines = new ArrayList<Map<String, String>>();
+
+                // write to string via template
+                VelocityContext context = new VelocityContext();
+                StringWriter writer = new StringWriter();
+
+                for (Map.Entry<String, String> entry : headerMap.entrySet()) {
+                    context.put(entry.getKey(), entry.getValue());
+                }
+
+                // sb.append that string
+                headerTemplate.merge(context, writer);
+                sb.append(writer.toString());
+
+                curPageNum += 1;
+
+                // TODO if curPageNum != 1, sb.append newline and formfeed character
+
+            }
+            reqLineMap = getReqLineMap(reqFileLines.get(i));
+
+            VelocityContext context = new VelocityContext();
+            StringWriter writer = new StringWriter();
+
+            for (Map.Entry<String, String> entry : reqLineMap.entrySet()) {
+                context.put(entry.getKey(), entry.getValue());
             }
 
-
+            // write to string via template and sb.append
+            reqLineTemplate.merge(context, writer);
+            sb.append(writer.toString());
         }
-
-
-
-
-
-
-
-        //context.put("name", "World");
-        //Person p = new Person("Bob   ", 10);
-        //Person p = new Person("   Bob", 10);
-        //context.put("person", p);
-
-        context.put("display", new DisplayTool());
-        StringWriter writer = new StringWriter();
-        t.merge(context, writer);
-        System.out.println(writer.toString());
-
+        //context.put("display", new DisplayTool());
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /*
         List<List<String>> reqLines = new ArrayList<>();
 
         for (ReqFileLine reqLine : reqFile.getReqFileLines()) {
@@ -119,6 +129,7 @@ public class ReportWriter {
             System.err.println(e);
         }
 
+        */
 
         System.exit(0);
         // TODO
@@ -136,6 +147,19 @@ public class ReportWriter {
 
     public static String padLeft(String s, int n) {
         return String.format("%1$" + n + "s", s);
+    }
+
+    private Map<String, String> getReqLineMap(ReqFileLine reqFileLine) {
+        Map<String, ReqFileLineField>  rflfs = reqFileLine.getReqFileLineFields();
+        Map<String, String> reqFileLineFieldMap = new HashMap<>();
+
+        for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
+            reqFileLineFieldMap.put(entry.getKey(), padLeft(entry.getValue().toString(), entry.getValue().getWidth()));
+        }
+
+        reqFileLineFieldMap.put("LONG_DESCRIPTION", padRight(rflfs.get("LONG_DESCRIPTION").toString(), rflfs.get("LONG_DESCRIPTION").getWidth()));
+
+        return reqFileLineFieldMap;
     }
 
     private Map<String, String> getHeaderMap(ReqFile reqFile, String timeStamp, int pageNumber) {
