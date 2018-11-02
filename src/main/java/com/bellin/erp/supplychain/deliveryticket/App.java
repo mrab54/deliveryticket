@@ -32,8 +32,8 @@ public class App
         App app = new App();
 
         try {
-            //app.runit(args[0]);
-            app.runit(INPUT_FILE_NAME);
+            app.runit(args[0]);
+            //app.runit(INPUT_FILE_NAME);
         } catch (Exception e) {
             System.err.println(e);
         }

@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.tools.generic.DisplayTool;
 
 import java.io.BufferedWriter;
@@ -29,15 +31,38 @@ public class ReportWriter {
     final static Charset ENCODING = StandardCharsets.UTF_8;
 
     public void writeDeliveryTicket(ReqFile reqFile, String outFilePath) {
+        /*
+
+        VelocityEngine ve = new VelocityEngine();
+ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+ve.init();
+VelocityContext context = new VelocityContext();
+context.put("date", getMyTimestampFunction());
+Template t = ve.getTemplate( "templates/email_html_new.vm" );
+StringWriter writer = new StringWriter();
+t.merge( context, writer );
+//////////////////////////////
+Properties p = new Properties();
+p.setProperty("resource.loader", "class");
+p.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+Velocity.init( p );
+         */
+
         // https://wiki.apache.org/velocity/VelocityWhitespaceGobbling
         //String OUTPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsrpt-0000015809.txt";
         //String OUTPUT_FILE_NAME = "C:\\Users\\mrab\\dev\\code\\java\\deliveryticket\\whsrpt-0000015809.txt";
         String OUTPUT_FILE_NAME = outFilePath;
         String timeStamp = dateFormat.format(Calendar.getInstance().getTime());
         VelocityEngine ve = new VelocityEngine();
+
+        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "class,file");
+        ve.setProperty("runtime.log.logsystem.log4j.logger", "VELLOGGER");
+        ve.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        ve.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
         ve.init();
-        Template headerTemplate = ve.getTemplate("header.vm");
-        Template reqLineTemplate = ve.getTemplate("reqline.vm");
+        Template headerTemplate = ve.getTemplate("templates\\header.vm");
+        Template reqLineTemplate = ve.getTemplate("templates\\reqline.vm");
 
         List<ReqFileLine> reqFileLines = reqFile.getReqFileLines();
 
@@ -89,6 +114,7 @@ public class ReportWriter {
 
         Path path = Paths.get(OUTPUT_FILE_NAME);
         try (BufferedWriter fileWriter = Files.newBufferedWriter(path, ENCODING)) {
+            System.out.println(sb.toString());
             fileWriter.write(sb.toString());
         } catch (IOException e) {
             System.err.println(e);
