@@ -19,13 +19,18 @@ public class ReqFile {
 
     //log
     private List<ReqFileLine> reqFileLines = new ArrayList<ReqFileLine>();
-    private String filePath;
+    private String inputFilePath;
+    private Map<String, Map<String, Object>> config;
 
 
-    private List<CSVRecord> getCSVRecords(String filePath) {
+    public ReqFile(Map<String, Map<String, Object>> config) {
+        this.config = config;
+    }
+
+    private List<CSVRecord> getCSVRecords(String inputFilePath) {
         List<CSVRecord> csvRecords = null;
         try (
-                Reader reader = Files.newBufferedReader(Paths.get(filePath), ENCODING);
+                Reader reader = Files.newBufferedReader(Paths.get(inputFilePath), ENCODING);
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                         .withFirstRecordAsHeader()
                         .withTrim()
@@ -43,16 +48,16 @@ public class ReqFile {
     private ReqFileLine createReqFileLine(CSVRecord csvRecord, int index) {
         Map<String, String> lineMap = csvRecord.toMap();
 
-        ReqFileLine reqFileLine = new ReqFileLine(index);
+        ReqFileLine reqFileLine = new ReqFileLine(index, this.config);
         reqFileLine.read(lineMap);
 
         return reqFileLine;
     }
 
-    public void read(String filePath) {
+    public void read(String inputFilePath) {
 
-        this.filePath = filePath;
-        List<CSVRecord> csvRecords = this.getCSVRecords(filePath);
+        this.inputFilePath = inputFilePath;
+        List<CSVRecord> csvRecords = this.getCSVRecords(inputFilePath);
 
         for (int i = 0; i < csvRecords.size(); i++) {
 
@@ -69,5 +74,9 @@ public class ReqFile {
 
     public List<ReqFileLine> getReqFileLines() {
         return this.reqFileLines;
+    }
+
+    public String getFileName() {
+       return "";
     }
 }

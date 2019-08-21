@@ -7,14 +7,19 @@ import java.util.TreeMap;
 public class ReqFileLine {
     private int index;
     private Map<String, ReqFileLineField> reqFileLineFields = new TreeMap<String, ReqFileLineField>();
+    private Map<String, Map<String, Object>> config;
     //log
 
-    public ReqFileLine(int index) {
+    public ReqFileLine(int index, Map<String, Map<String, Object>> config) {
         this.index = index;
-        for (String key : ReqFileLineField.FIELD_WIDTH_MAP.keySet()) {
-            ReqFileLineField rflf = new ReqFileLineField(key, ReqFileLineField.FIELD_WIDTH_MAP.get(key));
+
+        for (String key : config.keySet()) {
+            int width = (int) config.get(key).get("width");
+            String pad = (String) config.get(key).get("pad");
+
+            ReqFileLineField rflf = new ReqFileLineField(key, width, pad);
             this.reqFileLineFields.put(key, rflf);
-        };
+        }
     }
 
     public void read(Map<String, String> lineMap) {
