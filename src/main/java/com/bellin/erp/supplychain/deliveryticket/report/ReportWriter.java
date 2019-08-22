@@ -14,7 +14,6 @@ import org.apache.velocity.tools.generic.DisplayTool;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -26,29 +25,14 @@ import java.util.*;
 
 public class ReportWriter {
     final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    final static String PADLEFT = "left";
+    final static String PADRIGHT = "right";
     final static int pageWidth = 130;
     final static int pageHeight = 58;
     final static int reqLinesPerPage = 10;
     final static Charset ENCODING = StandardCharsets.UTF_8;
 
     public void writeDeliveryTicket(ReqFile reqFile, String outFilePath) {
-        /*
-
-        VelocityEngine ve = new VelocityEngine();
-ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-ve.init();
-VelocityContext context = new VelocityContext();
-context.put("date", getMyTimestampFunction());
-Template t = ve.getTemplate( "templates/email_html_new.vm" );
-StringWriter writer = new StringWriter();
-t.merge( context, writer );
-//////////////////////////////
-Properties p = new Properties();
-p.setProperty("resource.loader", "class");
-p.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-Velocity.init( p );
-         */
 
         // https://wiki.apache.org/velocity/VelocityWhitespaceGobbling
         //String OUTPUT_FILE_NAME = "D:\\ipaoutput\\SHIPMENTRELEASE\\whsrpt-0000015809.txt";
@@ -62,8 +46,8 @@ Velocity.init( p );
         ve.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         ve.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
         ve.init();
-        Template headerTemplate = ve.getTemplate("templates\\header.vm");
-        Template reqLineTemplate = ve.getTemplate("templates\\reqline.vm");
+        Template headerTemplate = ve.getTemplate("header.vm");
+        Template reqLineTemplate = ve.getTemplate("reqline.vm");
 
         List<ReqFileLine> reqFileLines = reqFile.getReqFileLines();
 
@@ -115,10 +99,9 @@ Velocity.init( p );
 
         Path path = Paths.get(OUTPUT_FILE_NAME);
         try (BufferedWriter fileWriter = Files.newBufferedWriter(path, ENCODING)) {
-            System.out.println(sb.toString());
             fileWriter.write(sb.toString());
         } catch (IOException e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
 
         System.out.println(sb.toString());
@@ -133,16 +116,20 @@ Velocity.init( p );
         return String.format("%1$" + n + "s", s);
     }
 
+    public static String pad(String s, int n, String paddingBehavior) {
+        if (PADLEFT.equals(paddingBehavior)) {
+            return padLeft(s, n);
+        }
+        return padRight(s, n);
+    }
+
     private Map<String, String> getReqLineMap(ReqFileLine reqFileLine) {
         Map<String, ReqFileLineField>  rflfs = reqFileLine.getReqFileLineFields();
         Map<String, String> reqFileLineFieldMap = new HashMap<>();
 
         for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
-            reqFileLineFieldMap.put(entry.getKey(), padLeft(entry.getValue().toString(), entry.getValue().getWidth()));
+            reqFileLineFieldMap.put(entry.getKey(), pad(entry.getValue().toString(), entry.getValue().getWidth(), entry.getValue().getPad()));
         }
-
-        reqFileLineFieldMap.put("LONG_DESCRIPTION", padRight(rflfs.get("LONG_DESCRIPTION").toString(), rflfs.get("LONG_DESCRIPTION").getWidth()));
-        // TODO total cost?
 
         return reqFileLineFieldMap;
     }
@@ -208,7 +195,7 @@ Velocity.init( p );
         */
 
         for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
-            header.put(entry.getKey(), padLeft(entry.getValue().toString(), entry.getValue().getWidth()));
+            header.put(entry.getKey(), pad(entry.getValue().toString(), entry.getValue().getWidth(), entry.getValue().getPad()));
         }
 
         header.put("PAGE_NUMBER", padLeft(String.valueOf(pageNumber), 10));
@@ -216,14 +203,4 @@ Velocity.init( p );
 
         return header;
     }
-    /*
-        String unitCost = reqFileLineFieldMap.get("UNIT_COST").toString();
-        String quantity = reqFileLineFieldMap.get("QUANTITY").toString();
-        BigDecimal unitCostDecimal = new BigDecimal(unitCost);
-        BigDecimal quantityDecimal = new BigDecimal(quantity);
-        BigDecimal extendedCostDecimal = unitCostDecimal.multiply(quantityDecimal);
-        extendedCostDecimal = extendedCostDecimal.setScale(4, BigDecimal.ROUND_HALF_UP);
-
-    }
-    */
 }
