@@ -12,20 +12,20 @@ REQ_NUMBER:
   pad: "left"
 LINE_NUMBER:
   type: "String"
-  width: 6
+  width: 4
   pad: "left"
 ITEM:
   type: "String"
   width: 32
-  pad: "left"
+  pad: "right"
 DESCRIPTION_1:
   type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 DESCRIPTION_2:
   type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 QUANTITY:
   type: "String"
   width: 18
@@ -33,7 +33,7 @@ QUANTITY:
 ENTERED_UOM:
   type: "String"
   width: 4
-  pad: "left"
+  pad: "right"
 FROM_COMPANY:
   type: "String"
   width: 4
@@ -45,7 +45,7 @@ FROM_LOCATION:
 PICK_FROM_BIN:
   type: "String"
   width: 7
-  pad: "left"
+  pad: "right"
 PUT_AWAY_BIN:
   type: "String"
   width: 7
@@ -61,7 +61,7 @@ SHIPMENT_NUMBER:
 CREATED_BY:
   type: "String"
   width: 40
-  pad: "left"
+  pad: "right"
 RQL_ADDR_1:
   type: "String"
   width: 30
@@ -69,7 +69,7 @@ RQL_ADDR_1:
 RQL_ADDR_2:
   type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 RQL_CITY:
   type: "String"
   width: 18
@@ -97,11 +97,11 @@ FROM_LOCATION_NAME:
 REQUESTER_NAME:
   type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 REQUESTER:
   type: "String"
   width: 10
-  pad: "left"
+  pad: "right"
 RLN_USR_FLD_01:
   type: "String"
   width: 20
@@ -113,4 +113,16 @@ BATCH_NBR:
 EST_DEL_DATE:
   type: "DateTime"
   width: 8
+  pad: "right"
+DESTINATION:
+  type: "String"
+  width: 15
+  pad: "right"
+MANUF_CODE:
+  type: "String"
+  width: 4
+  pad: "right"
+MANUF_NBR:
+  type: "String"
+  width: 35
   pad: "right"

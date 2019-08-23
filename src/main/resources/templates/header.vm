@@ -4,12 +4,12 @@ $TIMESTAMP        $COMPANY - $COMPANY_NAME	$FROM_LOCATION - $FROM_LOCATION_NAME 
 Document       Shipment     Batch    Delivery Date   Requesting Location
  $REQ_NUMBER     $SHIPMENT_NUMBER  $BATCH_NBR    $EST_DEL_DATE        $REQ_LOCATION                  $RQL_NAME
                                                                             $RQL_ADDR_1
-Destination: $REQ_LOCATION       CLINICAL DECISION UNIT CDU          #if($RQL_ADDR_2.trim().length > 0)$RQL_ADDR_2#{else}$RQL_CITY   $RQL_STATE $RQL_POSTAL_CODE#end
-Requester: $REQUESTER                 PROCUREMENT AND LOGISTICS      #if(!$RQL_ADDR_2)$RQL_CITY   $RQL_STATE $RQL_POSTAL_CODE#end
+Destination: $DESTINATION  $RQL_NAME                #if($RQL_ADDR_2.trim().length() > 0)$RQL_ADDR_2#{else}$RQL_CITY   $RQL_STATE $RQL_POSTAL_CODE#end
+Requester: $REQUESTER         $REQUESTER_NAME                #if($RQL_ADDR_2.trim().length() > 0)$RQL_CITY   $RQL_STATE $RQL_POSTAL_CODE#end
 Requested By: $CREATED_BY
 
 
-Pick Bin  Line  Item Description                  Manufacturer Information   Quantity To Pick Uom  Shipped
-Putaway                                                                      Unit Cost                              Extended Cost
+Pick Bin  Line  Item Description                  Manufacturer Information   Quantity To Pick Uom  Shipped          Putaway Bin
+
 -------  ----  --------------------------------   -------------------------  ---------------- ---- ---------------  --------------
 

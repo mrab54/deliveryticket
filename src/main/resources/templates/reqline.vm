@@ -1,5 +1,5 @@
-$PICK_FROM_BIN$LINE_NUMBER  $ITEM            MANUFACTURE ITEM$QUANTITY $ENTERED_UOM  ______________  ______________
-$PUT_AWAY_BIN          $DESCRIPTION_1          MANUFACTURE DESC 1
-                 $DESCRIPTION_2                      $UNIT_COST                           TOTAL COST
+$PICK_FROM_BIN  $LINE_NUMBER  $ITEM   $MANUF_CODE                     $QUANTITY $ENTERED_UOM  ______________  ______________
+$PUT_AWAY_BIN        $DESCRIPTION_1     $MANUF_NBR
+               $DESCRIPTION_2
 
 
