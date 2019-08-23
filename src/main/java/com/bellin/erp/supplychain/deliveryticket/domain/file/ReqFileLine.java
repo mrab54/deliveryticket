@@ -16,8 +16,16 @@ public class ReqFileLine {
         for (String key : config.keySet()) {
             int width = (int) config.get(key).get("width");
             String pad = (String) config.get(key).get("pad");
+            String type = (String) config.get(key).get("type");
+            ReqFileLineField rflf;
 
-            ReqFileLineField rflf = new ReqFileLineField(key, width, pad);
+            if (type.equals("String")) {
+                rflf = new ReqFileLineStringField(key, width, pad);
+            } else if (type.equals("DateTime")) {
+                rflf = new ReqFileLineDateTimeField(key, width, pad);
+            } else {
+                rflf = new ReqFileLineField(key, width, pad);
+            }
             this.reqFileLineFields.put(key, rflf);
         }
     }

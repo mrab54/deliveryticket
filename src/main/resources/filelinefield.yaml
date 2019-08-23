@@ -1,81 +1,116 @@
 COMPANY:
+    type: "String"
     width: 4
     pad:  "left"
 REQ_LOCATION:
+  type: "String"
   width: 5
-  pad: "left"
+  pad: "right"
 REQ_NUMBER:
-    width: 7
-    pad: "left"
+  type: "String"
+  width: 7
+  pad: "left"
 LINE_NUMBER:
-    width: 6
-    pad: "left"
+  type: "String"
+  width: 6
+  pad: "left"
 ITEM:
+  type: "String"
   width: 32
   pad: "left"
 DESCRIPTION_1:
+  type: "String"
   width: 30
   pad: "left"
 DESCRIPTION_2:
+  type: "String"
   width: 30
   pad: "left"
 QUANTITY:
+  type: "String"
   width: 18
   pad: "left"
 ENTERED_UOM:
+  type: "String"
   width: 4
   pad: "left"
 FROM_COMPANY:
+  type: "String"
   width: 4
   pad: "left"
 FROM_LOCATION:
+  type: "String"
   width: 5
   pad: "left"
 PICK_FROM_BIN:
+  type: "String"
   width: 7
   pad: "left"
 PUT_AWAY_BIN:
+  type: "String"
   width: 7
   pad: "left"
 DL_USER_FIELD1:
-    width: 30
-    pad: "left"
+  type: "String"
+  width: 30
+  pad: "left"
 SHIPMENT_NUMBER:
+  type: "String"
   width: 10
   pad: "left"
 CREATED_BY:
+  type: "String"
   width: 40
   pad: "left"
 RQL_ADDR_1:
+  type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 RQL_ADDR_2:
+  type: "String"
   width: 30
   pad: "left"
 RQL_CITY:
+  type: "String"
   width: 18
-  pad: "left"
+  pad: "right"
 RQL_STATE:
+  type: "String"
   width: 2
-  pad: "left"
+  pad: "right"
 RQL_POSTAL_CODE:
+  type: "String"
   width: 10
-  pad: "left"
+  pad: "right"
 RQL_NAME:
+  type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 COMPANY_NAME:
+  type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 FROM_LOCATION_NAME:
+  type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 REQUESTER_NAME:
+  type: "String"
   width: 30
   pad: "left"
 REQUESTER:
+  type: "String"
   width: 10
   pad: "left"
 RLN_USR_FLD_01:
+  type: "String"
   width: 20
   pad: "left"
+BATCH_NBR:
+  type: "String"
+  width: 8
+  pad: "left"
+EST_DEL_DATE:
+  type: "DateTime"
+  width: 8
+  pad: "right"

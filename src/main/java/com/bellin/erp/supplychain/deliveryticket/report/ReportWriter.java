@@ -42,6 +42,7 @@ public class ReportWriter {
         VelocityEngine ve = new VelocityEngine();
 
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "class,file");
+        ve.setProperty(RuntimeConstants.SPACE_GOBBLING, "none");
         ve.setProperty("runtime.log.logsystem.log4j.logger", "VELLOGGER");
         ve.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         ve.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");

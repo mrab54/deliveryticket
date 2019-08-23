@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class ReqFileLineField {
     //log
-    private String value;
-    private String name;
-    private int width;
-    private String pad;
+    protected String value;
+    protected String name;
+    protected int width;
+    protected String pad;
 
 
     public ReqFileLineField(String name, int width, String pad) {
