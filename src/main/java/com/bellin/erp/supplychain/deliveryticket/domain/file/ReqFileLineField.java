@@ -47,6 +47,7 @@ public class ReqFileLineField {
     }
 
     public String toString() {
-        return this.value;
+        return ReportWriter.pad(this.value, this.width, this.pad);
     }
+
 }

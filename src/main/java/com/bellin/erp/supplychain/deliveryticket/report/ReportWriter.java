@@ -129,7 +129,7 @@ public class ReportWriter {
         Map<String, String> reqFileLineFieldMap = new HashMap<>();
 
         for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
-            reqFileLineFieldMap.put(entry.getKey(), pad(entry.getValue().toString(), entry.getValue().getWidth(), entry.getValue().getPad()));
+            reqFileLineFieldMap.put(entry.getKey(), entry.getValue().toString());
         }
 
         return reqFileLineFieldMap;
@@ -137,66 +137,10 @@ public class ReportWriter {
 
     private Map<String, String> getHeaderMap(ReqFile reqFile, String timeStamp, int pageNumber) {
         Map<String, String> header = new HashMap<>();
-        //String timeStamp = dateFormat.format(Calendar.getInstance().getTime());
         Map<String, ReqFileLineField> rflfs = reqFile.getReqFileLines().get(0).getReqFileLineFields();
 
-        // TODO include timestamp
-        /*
-        ReqFileLineField company = rflfs.get("COMPANY");
-        header.put("COMPANY", padLeft(company.toString(), company.getWidth()));
-
-        ReqFileLineField fromLocation = rflfs.get("FROM_LOCATION");
-        header.put("FROM_LOCATION", padLeft(fromLocation.toString(), fromLocation.getWidth()));
-
-        ReqFileLineField companyName = rflfs.get("COMPANY_NAME");
-        header.put("COMPANY_NAME", padLeft(companyName.toString(), companyName.getWidth()));
-
-        ReqFileLineField fromLocationName = rflfs.get("FROM_LOCATION_NAME");
-        header.put("FROM_LOCATION_NAME", padLeft(fromLocationName.toString(), fromLocationName.getWidth()));
-
-        //TODO note this somehow
-        header.put("PAGE_NUMBER", padLeft(String.valueOf(pageNumber), 10));
-
-        ReqFileLineField shipmentNumber = rflfs.get("SHIPMENT_NUMBER");
-        header.put("SHIPMENT_NUMBER", padLeft(shipmentNumber.toString(), shipmentNumber.getWidth()));
-
-        ReqFileLineField reqLocation = rflfs.get("REQ_LOCATION");
-        header.put("REQ_LOCATION", padLeft(reqLocation.toString(), reqLocation.getWidth()));
-
-        ReqFileLineField reqNumber = rflfs.get("REQ_NUMBER");
-        header.put("REQ_NUMBER", padLeft(reqNumber.toString(), reqNumber.getWidth()));
-
-        ReqFileLineField rqlName = rflfs.get("RQL_NAME");
-        header.put("RQL_NAME", padLeft(rqlName.toString(), rqlName.getWidth()));
-
-        ReqFileLineField rqlAddr1 = rflfs.get("RQL_ADDR_1");
-        header.put("RQL_ADDR_1", padLeft(rqlAddr1.toString(), rqlAddr1.getWidth()));
-
-        ReqFileLineField rqlAddr2 = rflfs.get("RQL_ADDR_2");
-        header.put("RQL_ADDR_2", padLeft(rqlAddr2.toString(), rqlAddr2.getWidth()));
-
-        ReqFileLineField rqlCity = rflfs.get("RQL_CITY");
-        header.put("RQL_CITY", padLeft(rqlCity.toString(), rqlCity.getWidth()));
-
-        ReqFileLineField rqlState = rflfs.get("RQL_STATE");
-        header.put("RQL_STATE", padLeft(rqlState.toString(), rqlState.getWidth()));
-
-        ReqFileLineField rqlPostalCode = rflfs.get("RQL_POSTAL_CODE");
-        header.put("RQL_POSTAL_CODE", padLeft(rqlPostalCode.toString(), rqlPostalCode.getWidth()));
-
-        ReqFileLineField requester = rflfs.get("REQUESTER");
-        header.put("REQUESTER", padLeft(requester.toString(), requester.getWidth()));
-
-        ReqFileLineField requesterName = rflfs.get("REQUESTER_NAME");
-        header.put("REQUESTER_NAME", padLeft(rqlState.toString(), rqlState.getWidth()));
-
-        // TODO check on this for "Destination" is this equivalent
-        //ReqFileLineField reqLocation = rflfs.get("REQ_LOCATION");
-        //header.put("REQ_LOCATION", padLeft(reqLocation.toString(), reqLocation.getWidth()));
-        */
-
         for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
-            header.put(entry.getKey(), pad(entry.getValue().toString(), entry.getValue().getWidth(), entry.getValue().getPad()));
+            header.put(entry.getKey(), entry.getValue().toString());
         }
 
         header.put("PAGE_NUMBER", padLeft(String.valueOf(pageNumber), 10));
