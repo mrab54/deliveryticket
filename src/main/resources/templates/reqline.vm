@@ -1,5 +1,4 @@
-$PICK_FROM_BIN  $LINE_NUMBER  $ITEM   $MANUF_CODE                     $QUANTITY $ENTERED_UOM  ______________  ______________
-$PUT_AWAY_BIN        $DESCRIPTION_1     $MANUF_NBR
-               $DESCRIPTION_2
-
+$PICK_FROM_BIN   $LINE_NUMBER  $ITEM  $MANUF_CODE             $QUANTITY $ENTERED_UOM _________  #if($PUT_AWAY_BIN.startsWith("EXP"))EXCLUDE#{elseif}($DL_USER_FIELD1.trim().length() > 0)$DL_USER_FIELD1#{else}$PUT_AWAY_BIN#end
+                $DESCRIPTION_1    $MANUF_NBR            $RLN_USR_FLD_01
+                $DESCRIPTION_2
 

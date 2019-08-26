@@ -49,11 +49,11 @@ PICK_FROM_BIN:
 PUT_AWAY_BIN:
   type: "String"
   width: 7
-  pad: "left"
+  pad: "right"
 DL_USER_FIELD1:
   type: "String"
   width: 30
-  pad: "left"
+  pad: "right"
 SHIPMENT_NUMBER:
   type: "String"
   width: 10
