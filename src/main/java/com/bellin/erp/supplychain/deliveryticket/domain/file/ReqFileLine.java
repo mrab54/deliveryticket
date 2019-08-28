@@ -1,58 +1,57 @@
 package com.bellin.erp.supplychain.deliveryticket.domain.file;
 
+import com.bellin.erp.supplychain.deliveryticket.exception.ReqFileLineFieldMissingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 
+@SuppressWarnings("ALL")
 public class ReqFileLine {
+    private static final Logger logger = LoggerFactory.getLogger(ReqFileLine.class);
     private int index;
     private Map<String, ReqFileLineField> reqFileLineFields = new TreeMap<String, ReqFileLineField>();
-    private Map<String, Map<String, Object>> config;
-    //log
+    private Map<String, Map<String, Object>> config = null;
 
     public ReqFileLine(int index, Map<String, Map<String, Object>> config) {
         this.index = index;
 
-        for (String key : config.keySet()) {
-            int width = (int) config.get(key).get("width");
-            String pad = (String) config.get(key).get("pad");
-            String type = (String) config.get(key).get("type");
+        for (Map.Entry<String, Map<String, Object>> entry : config.entrySet()) {
+            String key = entry.getKey();
+            int width = (int) entry.getValue().get("width");
+            String pad = (String) entry.getValue().get("pad");
+            String type = (String) entry.getValue().get("type");
+
             ReqFileLineField rflf;
 
-            if (type.equals("String")) {
+            if ("String".equals(type)) {
                 rflf = new ReqFileLineStringField(key, width, pad);
-            } else if (type.equals("DateTime")) {
+            } else if ("DateTime".equals(type)) {
                 rflf = new ReqFileLineDateTimeField(key, width, pad);
             } else {
                 rflf = new ReqFileLineField(key, width, pad);
             }
-            this.reqFileLineFields.put(key, rflf);
+            reqFileLineFields.put(key, rflf);
         }
     }
 
-    public void read(Map<String, String> lineMap) {
-        for (Map.Entry<String, ReqFileLineField> entry : this.reqFileLineFields.entrySet()) {
+    public void read(Map<String, String> lineMap) throws ReqFileLineFieldMissingException {
+        // For every ReqFileLineField in this ReqFileLine
+        // Do a ReqFileLineField.read(lineMap)
+        // lineMap is the CSV file line key/value format
+        for (Map.Entry<String, ReqFileLineField> entry : reqFileLineFields.entrySet()) {
             ReqFileLineField lineField = entry.getValue();
-            try {
-                lineField.read(lineMap);
-            } catch (Exception e){
-                //TODO
-                System.err.println("asdf");
-                System.err.println(e);
-            }
+            lineField.read(lineMap);
         }
-        // // NOPE for k in lineMap
-        // for k,v in reqFileLineFields
-        //   v.read(lineMap)
     }
 
     public boolean isValid() {
-        // TODO - finish this
         return true;
     }
 
     public Map<String, ReqFileLineField> getReqFileLineFields() {
-        return this.reqFileLineFields;
+        return reqFileLineFields;
     }
 
 }

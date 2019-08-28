@@ -1,20 +1,24 @@
 package com.bellin.erp.supplychain.deliveryticket.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-public class Config {
+@SuppressWarnings("ALL")
+public final class Config {
 
-    public static Map<String, Map<String, Object>> getFileLineFieldConfig() {
+    public static Map<String, Map<String, Object>> getFileLineFieldConfig(String inputFileName) throws IOException {
         Yaml yaml = new Yaml();
+        Map<String, Map<String, Object>> fileLineFieldConfig;
+        @SuppressWarnings("EmptyClass") Class currentClass = new Object( ){}.getClass().getEnclosingClass();
 
-        Class currentClass = new Object( ){}.getClass().getEnclosingClass();
-        InputStream inputStream = currentClass
-                .getClassLoader()
-                .getResourceAsStream("filelinefield.yaml");
-        Map<String, Map<String, Object>> fileLineFieldConfig = yaml.load(inputStream);
+        try (InputStream inputStream = currentClass.getClassLoader().getResourceAsStream(inputFileName)) {
+            fileLineFieldConfig = yaml.load(inputStream);
+        }
 
         return fileLineFieldConfig;
     }

@@ -15,3 +15,5 @@ out/
 .java-version
 *.csv
 .idea/*
+*.out
+resources/templates/whs*

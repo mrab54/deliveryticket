@@ -7,7 +7,8 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+@SuppressWarnings("ALL")
+public class AppTest
     extends TestCase
 {
     /**

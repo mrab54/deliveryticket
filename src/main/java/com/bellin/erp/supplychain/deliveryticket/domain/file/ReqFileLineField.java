@@ -1,14 +1,15 @@
 package com.bellin.erp.supplychain.deliveryticket.domain.file;
 
+import com.bellin.erp.supplychain.deliveryticket.exception.ReqFileLineFieldMissingException;
 import com.bellin.erp.supplychain.deliveryticket.report.ReportWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ReqFileLineField {
-    //log
-    protected String value;
+    private static final Logger logger = LoggerFactory.getLogger(ReqFileLineField.class);
+    protected String value = null;
     protected String name;
     protected int width;
     protected String pad;
@@ -20,34 +21,38 @@ public class ReqFileLineField {
         this.pad = pad;
     }
 
-    public void read(Map<String, String> lineMap) throws Exception{
-        if (lineMap.containsKey(this.name)) {
-            this.value = lineMap.get(this.name);
+    public void read(Map<String, String> lineMap) throws ReqFileLineFieldMissingException {
+
+        if (lineMap.containsKey(name)) {
+            value = lineMap.get(name);
         }
         else {
-            // TODO
-            throw new Exception("asdfsadf");
+            throw new ReqFileLineFieldMissingException("Missing ReqFileLineField: " + name);
         }
+    }
+
+    private boolean isValid() {
+        return true;
     }
 
     public int getWidth(){
-        return this.width;
+        return width;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     public String getPad() {
-        return this.pad;
+        return pad;
     }
 
     public String toString() {
-        return ReportWriter.pad(this.value, this.width, this.pad);
+        return ReportWriter.pad(value, width, pad);
     }
 
 }
