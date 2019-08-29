@@ -139,6 +139,7 @@ public class ReportWriter {
         for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
             ReqFileLineField  rflf = entry.getValue();
 
+            // TODO - pull this out, maybe refactor into a new method - preprocessing(key, rflf)
             if (entry.getKey().equals("PUT_AWAY_BIN")) {
                 if (rflf.getValue().startsWith("EXP")) {
                     reqFileLineFieldMap.put(entry.getKey(), pad("EXCLUDE", rflf.getWidth(), rflf.getPad()));
@@ -147,7 +148,11 @@ public class ReportWriter {
                 } else if (rflf.getValue().matches("\\d+")) {
                     reqFileLineFieldMap.put(entry.getKey(), pad("--- UNASSIGNED - NONE ---", rflf.getWidth(), rflf.getPad()));
                 } else {
-                    reqFileLineFieldMap.put(entry.getKey(), rflf.toString());
+                    if (rflf.getValue().length() <= 4) {
+                        reqFileLineFieldMap.put(entry.getKey(), ReportWriter.pad(rflf.getValue().substring(0, rflf.getValue().length()), rflf.getWidth(), rflf.getPad()));
+                    } else {
+                        reqFileLineFieldMap.put(entry.getKey(), ReportWriter.pad(rflf.getValue().substring(0, 5), rflf.getWidth(), rflf.getPad()));
+                    }
                 }
             } else {
                 reqFileLineFieldMap.put(entry.getKey(), rflf.toString());

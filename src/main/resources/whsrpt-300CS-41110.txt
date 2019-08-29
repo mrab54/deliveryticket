@@ -1,4 +1,4 @@
-2019-08-29 11:34:59         300 - BELLIN HOSPITAL               	   CS - DISTRIBUTION                      Page              1
+2019-08-29 13:37:19         300 - BELLIN HOSPITAL               	   CS - DISTRIBUTION                      Page              1
                                                          Delivery Ticket
 
 Document       Shipment     Batch    Delivery Date   Requesting Location
@@ -13,7 +13,7 @@ Pick Bin  Line  Item Description                  Manufacturer Information      
                                                                                                       Substitute
 -------   ----  --------------------------------  ------------------------------  --- ---- ---------  ------------------------------
 
-IV-F4A       8  0004539                           TELEFLEX INC                      3 EA   _________  MR-G1D2
+IV-F4A       8  0004539                           TELEFLEX INC                      3 EA   _________  MR-G1  
                 SPROMTR INCNT 5K- ML VOL FLOAT    8884719009                                          SUB FOR 1234567
                 1 WY VLV HNDL VOLDYNE LF DISP 
 
@@ -25,7 +25,7 @@ IV-I3D      10  0030746                           CARDINAL HEALTH INC           
                 GLOVE SURG 7.5 LF PROTEXIS PI     2D72PL75X                                                          
                 CLASSIC PI CRM PF CLASSIC 12IN
 
-IV-K1C      17  0055098                           MEDICAL ACTION IND INC            3 EA   _________  MR-A5C 
+IV-K1C      17  0055098                           MEDICAL ACTION IND INC            3 EA   _________  MR-A5  
                 URINAL PTNT W/O CVR HNG HNDL      H145-01                                                            
                 GRAD TRNLU FM DISP 1QT        
 
@@ -33,7 +33,7 @@ IV-L4C      11  0031439                           MEDLINE IND INC               
                 WSHCLTH CLNSG RMD PHYTOPLEX       MSC092508                                                          
                 3.6% DMTHC CLTH               
 
-IV-M4A       5  0004030                           TELEFLEX INC                      8 EA   _________  MR-G2A2
+IV-M4A       5  0004030                           TELEFLEX INC                      8 EA   _________  MR-G2  
                 CANNULA NSL 14FT ADLT KINK RES    1810                                                               
                 STR LMN TU NONFLARE BEV TIP   
 
@@ -41,19 +41,19 @@ IV-N3B      14  0040630                           MEDLINE IND INC               
                 WSHCLTH CLNSG RDBTH SEL CLTH      MSC095106                                                          
                 NANTMC MED WGHT ALCHL FR RNSE 
 
-MR-A1D       6  0004101                           OWENS AND MINOR INC               7 EA   _________  MR-F2F1
+MR-A1D       6  0004101                           OWENS AND MINOR INC               7 EA   _________  MR-F2  
                 BAG ICE 13X7.25IN UNIV 3 LYR      IB1002                                                             
                 CLP CLOS REFL TIES WD MTH OPG 
 
-MR-A3A       3  0003404                           3M CO                            18 RL   _________  MR-F2D1
+MR-A3A       3  0003404                           3M CO                            18 RL   _________  MR-F2  
                 TAPE SURG 10YDX1IN 3M TRNSPR      1527-1                                                             
                 PLSTC HYPOALLG H2O RES        
 
-MR-A5A       1  0001938                           CARDINAL HEALTH INC               3 BX   _________  MR-F3B2
+MR-A5A       1  0001938                           CARDINAL HEALTH INC               3 BX   _________  MR-F3  
                 PAD ALCHL MED 70% ISPRP ALCHL     6818                                                               
                 2 PLY NWVN SATURATE WEBCOL    
 
-2019-08-29 11:34:59         300 - BELLIN HOSPITAL               	   CS - DISTRIBUTION                      Page              2
+2019-08-29 13:37:19         300 - BELLIN HOSPITAL               	   CS - DISTRIBUTION                      Page              2
                                                          Delivery Ticket
 
 Document       Shipment     Batch    Delivery Date   Requesting Location
@@ -68,39 +68,39 @@ Pick Bin  Line  Item Description                  Manufacturer Information      
                                                                                                       Substitute
 -------   ----  --------------------------------  ------------------------------  --- ---- ---------  ------------------------------
 
-MR-B5I       7  0004473                           MEDLINE IND INC                   6 EA   _________  MR-E2B4
+MR-B5I       7  0004473                           MEDLINE IND INC                   6 EA   _________  MR-E2  
                 CONT DNTR HOT PNK CUP             DYND70294B                                                         
                                               
 
-MR-C3I      13  0037932                           CONVATEC LTD                      2 EA   _________  MR-F2J2
+MR-C3I      13  0037932                           CONVATEC LTD                      2 EA   _________  MR-F2  
                 DRSG WND 5X4IN RECT AQUACEL AG    420677                                                             
                 XTRA HDRFB ABSBT NWVN STCH LF 
 
-MR-D2E      19  0058013                           MOLNLYCKE HEALTH CARE INC        10 EA   _________  MR-F2H2
+MR-D2E      19  0058013                           MOLNLYCKE HEALTH CARE INC        10 EA   _________  MR-F2  
                 DRSG 9.2X9.2IN ADHNT SAFETAC      282400                                                             
                 SIL MEPILEX BR FOAM SCRM      
 
-MR-D3A       9  0018994                           MOLNLYCKE HEALTH CARE INC        30 EA   _________  MR-F2I3
+MR-D3A       9  0018994                           MOLNLYCKE HEALTH CARE INC        30 EA   _________  MR-F2  
                 DRSG SQ 4X4IN ABSBT PD SELF       295300                                                             
                 ADHNT MOIST PRF SIL STRL LF   
 
-MR-D4C      18  0057860                           ROCHE DIAGNOSTICS                 6 BX   _________  MR-E3F1
+MR-D4C      18  0057860                           ROCHE DIAGNOSTICS                 6 BX   _________  MR-E3  
                 STRIP MTR TEST ACCK INFO II       05942861001                                                        
                 GLUCS SLD 50 TEST LF          
 
-MR-E3I      12  0032973                           CONVATEC LTD                      2 EA   _________  MR-F2J1
+MR-E3I      12  0032973                           CONVATEC LTD                      2 EA   _________  MR-F2  
                 DRSG WND 45X2CM AQUACEL AG        403771                                                             
                 1.2% IONIC SILV HDRFB ROPE    
 
-MR-I4J       4  0004002                           3M CO                             4 PK   _________  MR-G1K1
+MR-I4J       4  0004002                           3M CO                             4 PK   _________  MR-G1  
                 ELECTRODE EKG 1.2X.8IN ADLT       2360                                                               
                 CNDCT ADHSV GEL RDLCNT XL TAB 
 
-MR-M3L       2  0003267                           ACTION HEALTH                     1 EA   _________  MR-F1K 
+MR-M3L       2  0003267                           ACTION HEALTH                     1 EA   _________  MR-F1  
                 BAG BODY 36X90IN 5MIL VNYL        SZ                                                                 
                 WHT POSTMORTEM CADAVER        
 
-MR-O2B      15  0045182                           PRINCIPLE BUSINESS ENTERPRISES    4 PR   _________  MR-E3J2
+MR-O2B      15  0045182                           PRINCIPLE BUSINESS ENTERPRISES    4 PR   _________  MR-E3  
                 SLIP PTNT YLW XL ADLT 1 IMPRT     3912                                                               
                 7.5-10IN PLWPW RISK ALRT 1314 
 
