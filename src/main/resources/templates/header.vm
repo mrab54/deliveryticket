@@ -9,7 +9,7 @@ Requester: $REQUESTER         $REQUESTER_NAME                #if($RQL_ADDR_2.tri
 Requested By: $CREATED_BY
 
 
-Pick Bin  Line  Item Description                  Manufacturer Information   Quantity Uom  Shipped    Putaway Bin
+Pick Bin  Line  Item Description                  Manufacturer Information        Qty Uom  Shipped    Putaway Bin
                                                                                                       Substitute
--------   ----  --------------------------------  -------------------------  -------- ---- ---------  ------------------------------
+-------   ----  --------------------------------  ------------------------------  --- ---- ---------  ------------------------------
 

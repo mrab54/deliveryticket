@@ -28,7 +28,7 @@ DESCRIPTION_2:
   pad: "right"
 QUANTITY:
   type: "String"
-  width: 18
+  width: 4
   pad: "left"
 ENTERED_UOM:
   type: "String"
@@ -125,4 +125,8 @@ MANUF_CODE:
 MANUF_NBR:
   type: "String"
   width: 35
+  pad: "right"
+MANUF_DESCRIPTION:
+  type: "String"
+  width: 30
   pad: "right"

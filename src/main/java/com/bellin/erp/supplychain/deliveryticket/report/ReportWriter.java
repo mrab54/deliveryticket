@@ -137,7 +137,22 @@ public class ReportWriter {
         Map<String, String> reqFileLineFieldMap = new HashMap<>();
 
         for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
-            reqFileLineFieldMap.put(entry.getKey(), entry.getValue().toString());
+            ReqFileLineField  rflf = entry.getValue();
+
+            if (entry.getKey().equals("PUT_AWAY_BIN")) {
+                if (rflf.getValue().startsWith("EXP")) {
+                    reqFileLineFieldMap.put(entry.getKey(), pad("EXCLUDE", rflf.getWidth(), rflf.getPad()));
+                } else if (rflfs.get("DL_USER_FIELD1").getValue().length() > 0) {
+                    reqFileLineFieldMap.put(entry.getKey(), rflfs.get("DL_USER_FIELD1").toString());
+                } else if (rflf.getValue().matches("\\d+")) {
+                    reqFileLineFieldMap.put(entry.getKey(), pad("--- UNASSIGNED - NONE ---", rflf.getWidth(), rflf.getPad()));
+                } else {
+                    reqFileLineFieldMap.put(entry.getKey(), rflf.toString());
+                }
+            } else {
+                reqFileLineFieldMap.put(entry.getKey(), rflf.toString());
+            }
+
         }
 
         return reqFileLineFieldMap;

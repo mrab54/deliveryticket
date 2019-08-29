@@ -31,6 +31,8 @@ public class App
     public static void main( String[] args )
     {
         App.logger.info("Start");
+        String test = "1234";
+        boolean bMatches = test.matches("\\d+");
         App app = new App();
 
         try {
