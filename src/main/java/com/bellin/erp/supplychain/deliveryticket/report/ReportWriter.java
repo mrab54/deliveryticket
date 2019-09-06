@@ -138,20 +138,22 @@ public class ReportWriter {
 
         for (Map.Entry<String, ReqFileLineField> entry : rflfs.entrySet()) {
             ReqFileLineField  rflf = entry.getValue();
+            String rflfValue = rflf.getValue();
 
             // TODO - pull this out, maybe refactor into a new method - preprocessing(key, rflf)
+            // 3200L  or 4200K is a par location to use as an example.  Use that for your data for test
             if (entry.getKey().equals("PUT_AWAY_BIN")) {
-                if (rflf.getValue().startsWith("EXP")) {
+                if (rflfValue.startsWith("EXCL")) {
                     reqFileLineFieldMap.put(entry.getKey(), pad("EXCLUDE", rflf.getWidth(), rflf.getPad()));
                 } else if (rflfs.get("DL_USER_FIELD1").getValue().length() > 0) {
                     reqFileLineFieldMap.put(entry.getKey(), rflfs.get("DL_USER_FIELD1").toString());
-                } else if (rflf.getValue().matches("\\d+")) {
+                } else if (rflfValue.matches("\\d+") || rflfValue.contains("NEW")) {
                     reqFileLineFieldMap.put(entry.getKey(), pad("--- UNASSIGNED - NONE ---", rflf.getWidth(), rflf.getPad()));
                 } else {
-                    if (rflf.getValue().length() <= 4) {
-                        reqFileLineFieldMap.put(entry.getKey(), ReportWriter.pad(rflf.getValue().substring(0, rflf.getValue().length()), rflf.getWidth(), rflf.getPad()));
+                    if (rflfValue.length() <= 4) {
+                        reqFileLineFieldMap.put(entry.getKey(), ReportWriter.pad(rflfValue.substring(0, rflfValue.length()), rflf.getWidth(), rflf.getPad()));
                     } else {
-                        reqFileLineFieldMap.put(entry.getKey(), ReportWriter.pad(rflf.getValue().substring(0, 5), rflf.getWidth(), rflf.getPad()));
+                        reqFileLineFieldMap.put(entry.getKey(), ReportWriter.pad(rflfValue.substring(0, 5), rflf.getWidth(), rflf.getPad()));
                     }
                 }
             } else {

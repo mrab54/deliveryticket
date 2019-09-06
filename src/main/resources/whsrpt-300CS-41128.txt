@@ -1,0 +1,82 @@
+2019-09-06 10:20:49         300 - BELLIN HOSPITAL               	   CS - DISTRIBUTION                      Page              1
+                                                         Delivery Ticket
+
+Document       Shipment     Batch    Delivery Date   Requesting Location
+   95987          41128    105142    09/05/19        4000K                  KID CARE                      
+                                                                            744 S WEBSTER AVE             
+Destination: 4000K            KID CARE                                      LOBBY                         
+Requester: 4530               PROCUREMENT AND LOGISTICS                     GREEN BAY            WI 54301     
+Requested By: Rabas, Michael                          
+
+
+Pick Bin  Line  Item Description                  Manufacturer Information        Qty Uom  Shipped    Putaway Bin
+                                                                                                      Substitute
+-------   ----  --------------------------------  ------------------------------  --- ---- ---------  ------------------------------
+
+IV-A3A       4  0000922                           HOSPIRA INC                       1 EA   _________  TEST ITEM                     
+                SOL IV 0.9% NACL 1000ML STRL      07983-09                                                           
+                PRSV FR N-PYRG FLEX CONT LF   
+
+IV-A3B       3  0000845                           HOSPIRA INC                       1 EA   _________  --- UNASSIGNED - NONE ---
+                SOL IRR 0.9% NACL 3L PRSV FR      07972-08                                                           
+                FLEX CONT USP LF              
+
+IV-D1B      14  0001357                           DEROYAL IND INC                   1 EA   _________  1-A1C  
+                BRACE WALKING SM                  SL8001-03                                                          
+                STD TOP DSGN SAMSON TIB LF    
+
+IV-D1D      12  0001351                           DEROYAL IND INC                   1 EA   _________  EXCLUDE
+                BRACE WALKING LG                  SL8001-07                                                          
+                STD TOP DSGN SAMSON TIB LF    
+
+IV-D5E       2  0000571                           HOSPIRA INC                       1 EA   _________  3-A1E  
+                SOL IV 1LTR KCL 20 DXTRS 5%       07901-09                                            SUB FOR 1234567
+                NACL 0.225% INJ FLEX CONT     
+
+MR-E1C       5  0000958                           BECTON DICKINSON                  1 EA   _________  --- UNASSIGNED - NONE ---
+                NEEDLE SPINAL 20GAX3-1/2IN YLW    405182                                                             
+                QUINCKE HUB LF DISP           
+
+MR-E1O       6  0000960                           BECTON DICKINSON                  1 EA   _________  1-B3L  
+                NEEDLE SPINAL 25GAX3-1/2IN BLU    405180                                                             
+                QUINCKE HUB LF DISP           
+
+MR-E5B       1  0000038                           MEDLINE IND INC                   1 EA   _________  1-A3B  
+                PACK CLD 9X6IN MDCHC LG INST      MDS138000                                                          
+                CVR LF DISP                   
+
+MR-L1F      11  0001003                           DEROYAL IND INC                   1 EA   _________  1-A3C  
+                SLING ORTH SPCLTY II SM ARM       V9902-02                                                           
+                ENVLP STRAP CLSD ELBW OPEN    
+
+MR-L3A       8  0000997                           DEROYAL IND INC                   1 EA   _________  1-A3D  
+                SLING ORTH MED ARM DEEP POCKT     V9902-04                                                           
+                SHLD PD HKLP CLOS COT         
+
+2019-09-06 10:20:49         300 - BELLIN HOSPITAL               	   CS - DISTRIBUTION                      Page              2
+                                                         Delivery Ticket
+
+Document       Shipment     Batch    Delivery Date   Requesting Location
+   95987          41128    105142    09/05/19        4000K                  KID CARE                      
+                                                                            744 S WEBSTER AVE             
+Destination: 4000K            KID CARE                                      LOBBY                         
+Requester: 4530               PROCUREMENT AND LOGISTICS                     GREEN BAY            WI 54301     
+Requested By: Rabas, Michael                          
+
+
+Pick Bin  Line  Item Description                  Manufacturer Information        Qty Uom  Shipped    Putaway Bin
+                                                                                                      Substitute
+-------   ----  --------------------------------  ------------------------------  --- ---- ---------  ------------------------------
+
+MR-L3C       9  0000999                           DEROYAL IND INC                   1 EA   _________  1-A3C  
+                SLING ORTH SM ARM FOAM ADLT       V990203                                                            
+                                              
+
+MR-L3E      10  0001002                           DEROYAL IND INC                   1 EA   _________  1-A3D  
+                SLING ORTH XL ARM DEEP POCKT      V9902-06                                                           
+                SHLD PD HKLP CLOS COT         
+
+MR-L4A       7  0000996                           DEROYAL IND INC                   1 EA   _________  1-A3D  
+                SLING ORTH LG ARM DEEP POCKT      V9902-05                                                           
+                SHLD PD HKLP CLOS COT         
+
