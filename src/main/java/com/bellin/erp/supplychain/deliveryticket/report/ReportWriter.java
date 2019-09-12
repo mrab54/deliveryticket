@@ -144,7 +144,7 @@ public class ReportWriter {
             // 3200L  or 4200K is a par location to use as an example.  Use that for your data for test
             if (entry.getKey().equals("PUT_AWAY_BIN")) {
                 if (rflfValue.startsWith("EXCL")) {
-                    reqFileLineFieldMap.put(entry.getKey(), pad("EXCLUDE", rflf.getWidth(), rflf.getPad()));
+                    reqFileLineFieldMap.put(entry.getKey(), pad("--- EXCLUDE ---", rflf.getWidth(), rflf.getPad()));
                 } else if (rflfs.get("DL_USER_FIELD1").getValue().length() > 0) {
                     reqFileLineFieldMap.put(entry.getKey(), rflfs.get("DL_USER_FIELD1").toString());
                 } else if (rflfValue.matches("\\d+") || rflfValue.contains("NEW")) {
