@@ -31,19 +31,18 @@ public class App
 
     public static void main( String[] args )
     {
-        App.logger.info("Start");
-        String test = "1234";
-        boolean bMatches = test.matches("\\d+");
         App app = new App();
 
         try {
-            //String inputFileName = args[0];
-            String inputFileName = App.INPUT_FILE_NAME;
+            String inputFileName = args[0];
+            //String inputFileName = App.INPUT_FILE_NAME;
+            App.logger.info("Processing: " + inputFileName);
             app.runit(inputFileName);
+            App.logger.info("End: " + inputFileName);
         } catch (Exception e) {
             App.logger.error("Unhandled error", e);
+            System.exit(1);
         }
-        App.logger.info("End");
     }
 
 
