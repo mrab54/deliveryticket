@@ -145,10 +145,12 @@ public class ReportWriter {
             if (entry.getKey().equals("PUT_AWAY_BIN")) {
                 if (rflfValue.startsWith("EXCL")) {
                     reqFileLineFieldMap.put(entry.getKey(), pad("--- EXCLUDE ---", rflf.getWidth(), rflf.getPad()));
+                    // TODO - if the first character is not numeric it is UNASSIGNED
+                    // MR-B3D would be unassigned.  So can change /add a new scenario to say "if it starts with an Alpha character"
+                } else if (!rflfValue.equals("") && Character.isLetter(rflfValue.charAt(0)) ) {
+                    reqFileLineFieldMap.put(entry.getKey(), pad("--- UNASSIGNED - NONE ---", rflf.getWidth(), rflf.getPad()));
                 } else if (rflfs.get("DL_USER_FIELD1").getValue().length() > 0) {
                     reqFileLineFieldMap.put(entry.getKey(), rflfs.get("DL_USER_FIELD1").toString());
-                } else if (rflfValue.matches("\\d+") || rflfValue.contains("NEW")) {
-                    reqFileLineFieldMap.put(entry.getKey(), pad("--- UNASSIGNED - NONE ---", rflf.getWidth(), rflf.getPad()));
                 } else {
                     if (rflfValue.length() <= 4) {
                         reqFileLineFieldMap.put(entry.getKey(), ReportWriter.pad(rflfValue.substring(0, rflfValue.length()), rflf.getWidth(), rflf.getPad()));
