@@ -1,6 +1,5 @@
 package com.bellin.erp.supplychain.deliveryticket;
 
-
 import com.bellin.erp.supplychain.deliveryticket.config.Config;
 import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFile;
 import com.bellin.erp.supplychain.deliveryticket.exception.ReqFileException;
@@ -12,10 +11,6 @@ import java.io.IOException;
 import java.util.Map;
 
 
-/**
- * Hello world!
- *
- */
 @SuppressWarnings("ALL")
 public class App
 {
@@ -66,6 +61,11 @@ public class App
         String outputFilePath = inputFilePath.replace("whsdata", "whsrpt").replace("csv", "txt");
 
         ReportWriter rw = new ReportWriter();
-        rw.writeDeliveryTicket(reqFile, outputFilePath);
+        try {
+            rw.writeDeliveryTicket(reqFile, outputFilePath);
+        } catch (IOException e) {
+            App.logger.error("Error writing delivery ticket", e);
+            System.exit(1);
+        }
     }
 }

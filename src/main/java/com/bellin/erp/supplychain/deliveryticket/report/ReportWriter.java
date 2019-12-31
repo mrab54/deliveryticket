@@ -49,72 +49,68 @@ public class ReportWriter {
         ve.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
         ve.init();
     }
-
-    // TODO - break this up
-    public void writeDeliveryTicket(ReqFile reqFile, String outFilePath) {
-
-        String currentTimeStamp = ReportWriter.dateFormat.format(Calendar.getInstance().getTime());
-
+    private StringWriter writeReqFileHeader(int curPageNum, ReqFile reqFile, String currentTimeStamp) {
+        StringWriter stringWriter = new StringWriter();
         Template headerTemplate = ve.getTemplate("header.vm");
-        Template reqLineTemplate = ve.getTemplate("reqline.vm");
+        Map<String, String> headerMap;
 
+        // TODO - need to verify this is saved in the StringBuffer and not cleared by Template.merge()
+        if (curPageNum != 1) {
+            stringWriter.append("\f");
+        }
+
+        headerMap = getHeaderMap(reqFile, currentTimeStamp, curPageNum);
+        Context context = new VelocityContext();
+
+        for (Map.Entry<String, String> entry : headerMap.entrySet()) {
+            context.put(entry.getKey(), entry.getValue());
+        }
+
+        headerTemplate.merge(context, stringWriter);
+        return stringWriter;
+    }
+
+    private StringWriter writeReqFileLine(ReqFileLine reqFileLine) {
+        StringWriter stringWriter = new StringWriter();
+        Template reqLineTemplate = ve.getTemplate("reqline.vm");
+        Map<String, String> reqLineMap = getReqLineMap(reqFileLine);
+
+        Context context = new VelocityContext();
+        stringWriter.getBuffer().setLength(0);
+
+        for (Map.Entry<String, String> entry : reqLineMap.entrySet()) {
+            context.put(entry.getKey(), entry.getValue());
+        }
+
+        reqLineTemplate.merge(context, stringWriter);
+        return stringWriter;
+    }
+
+    private void writeToFile(String filePath, StringBuilder sb) throws IOException {
+        Path path = Paths.get(filePath);
+        try (BufferedWriter fileWriter = Files.newBufferedWriter(path, ReportWriter.ENCODING)) {
+            fileWriter.write(sb.toString());
+        }
+        ReportWriter.logger.debug(sb.toString());
+    }
+
+    public void writeDeliveryTicket(ReqFile reqFile, String outFilePath) throws IOException{
+        String currentTimeStamp = ReportWriter.dateFormat.format(Calendar.getInstance().getTime());
         List<ReqFileLine> reqFileLines = reqFile.getReqFileLines();
 
         int curPageNum = 0;
-        Map<String, String> headerMap;
-        Map<String, String> reqLineMap;
         StringBuilder sb = new StringBuilder();
-        StringWriter stringWriter = new StringWriter();
 
         for (int i = 0; i < reqFileLines.size(); i++) {
+
             if (i % ReportWriter.reqLinesPerPage == 0) {
-                // write header
                 curPageNum += 1;
-
-                if (curPageNum != 1) {
-                    sb.append("\f");
-                }
-
-                // Get headerMap
-                headerMap = getHeaderMap(reqFile, currentTimeStamp, curPageNum);
-
-                // write to string via template
-                Context context = new VelocityContext();
-                //StringWriter stringWriter = new StringWriter();
-                stringWriter.getBuffer().setLength(0);
-
-                for (Map.Entry<String, String> entry : headerMap.entrySet()) {
-                    context.put(entry.getKey(), entry.getValue());
-                }
-
-                // sb.append that string
-                headerTemplate.merge(context, stringWriter);
-                sb.append(stringWriter);
+                sb.append(writeReqFileHeader(curPageNum, reqFile, currentTimeStamp).getBuffer());
             }
-
-            // write line
-            reqLineMap = getReqLineMap(reqFileLines.get(i));
-
-            Context context = new VelocityContext();
-            stringWriter.getBuffer().setLength(0);
-
-            for (Map.Entry<String, String> entry : reqLineMap.entrySet()) {
-                context.put(entry.getKey(), entry.getValue());
-            }
-
-            reqLineTemplate.merge(context, stringWriter);
-            sb.append(stringWriter);
+            sb.append(writeReqFileLine(reqFileLines.get(i)).getBuffer());
         }
 
-        // TODO - close file
-        Path path = Paths.get(outFilePath);
-        try (BufferedWriter fileWriter = Files.newBufferedWriter(path, ReportWriter.ENCODING)) {
-            fileWriter.write(sb.toString());
-        } catch (IOException e) {
-
-        }
-        ReportWriter.logger.debug(sb.toString());
-        //System.out.println(sb.toString());
+        writeToFile(outFilePath, sb);
     }
 
     public static String padRight(String s, int n) {

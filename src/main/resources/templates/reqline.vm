@@ -1,4 +1,4 @@
 $PICK_FROM_BIN   $LINE_NUMBER  $ITEM  $MANUF_DESCRIPTION $QUANTITY $ENTERED_UOM _________  $PUT_AWAY_BIN
-                $DESCRIPTION_1    $MANUF_NBR            $RLN_USR_FLD_01
+                $DESCRIPTION_1    $MANUF_NBR                 $PO_USER_FLD_4
                 $DESCRIPTION_2
 
