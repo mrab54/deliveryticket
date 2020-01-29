@@ -159,11 +159,6 @@ public class ReportWriter {
             }
         }
 
-        if (rflfs.get("USER_FIELD1").getValue().equals("SUBSTITUTE")
-                && rflfs.get("PO_USER_FLD_4").getValue().equals("")) {
-            reqFileLineFieldMap.put("PO_USER_FLD_4", "SUBSTITUTE");
-        }
-
         return reqFileLineFieldMap;
     }
 
