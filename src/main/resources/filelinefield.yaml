@@ -130,3 +130,19 @@ MANUF_DESCRIPTION:
   type: "String"
   width: 30
   pad: "right"
+PO_USER_FLD_7:
+  type: "String"
+  width: 30
+  pad: "right"
+USER_FIELD1:
+  type: "String"
+  width: 30
+  pad: "right"
+FILLED_QTY:
+  type: "String"
+  width: 4
+  pad: "left"
+BACKORDER_QTY:
+  type: "String"
+  width: 4
+  pad: "left"
