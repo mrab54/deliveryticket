@@ -102,10 +102,10 @@ REQUESTER:
   type: "String"
   width: 10
   pad: "right"
-PO_USER_FLD_4:
+RLN_USR_FLD_01:
   type: "String"
-  width: 30
-  pad: "right"
+  width: 20
+  pad: "left"
 BATCH_NBR:
   type: "String"
   width: 8
@@ -138,4 +138,15 @@ USER_FIELD1:
   type: "String"
   width: 30
   pad: "right"
-
+FILLED_QTY:
+  type: "String"
+  width: 4
+  pad: "left"
+BACKORDER_QTY:
+  type: "String"
+  width: 4
+  pad: "left"
+PO_USER_FLD_4:
+  type: "String"
+  width: 30
+  pad: "right"
