@@ -1,0 +1,20 @@
+UF_LINE_NBR:
+    type: "String"
+    width: 4
+    pad:  "left"
+UF_ITEM:
+  type: "String"
+  width: 32
+  pad: "right"
+UF_ITEM_DESC:
+  type: "String"
+  width: 30
+  pad: "right"
+UF_UOM:
+  type: "String"
+  width: 4
+  pad: "right"
+UF_UNFULFILLED_QTY:
+  type: "String"
+  width: 4
+  pad: "left"

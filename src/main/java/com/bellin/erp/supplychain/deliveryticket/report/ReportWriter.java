@@ -1,8 +1,6 @@
 package com.bellin.erp.supplychain.deliveryticket.report;
 
-import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFile;
-import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFileLine;
-import com.bellin.erp.supplychain.deliveryticket.domain.file.ReqFileLineField;
+import com.bellin.erp.supplychain.deliveryticket.domain.file.*;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -38,6 +36,7 @@ public class ReportWriter {
     final static int pageNumberWidth = 10;
     final static int timestampWidth = 19;
     private static final Charset ENCODING = StandardCharsets.UTF_8;
+    private static final int ufHeaderHeight = 6;
 
     private VelocityEngine ve = new VelocityEngine();
 
@@ -70,6 +69,31 @@ public class ReportWriter {
         return stringWriter;
     }
 
+    private StringWriter writeUFFileHeader() {
+        StringWriter stringWriter = new StringWriter();
+        Template ufHeaderTemplate = ve.getTemplate("ufheader.vm");
+        Context context = new VelocityContext();
+        ufHeaderTemplate.merge(context, stringWriter);
+
+        return stringWriter;
+    }
+
+    private StringWriter writeUFFileLine(UFFileLine ufFileLine) {
+        StringWriter stringWriter = new StringWriter();
+        Template ufLineTemplate = ve.getTemplate("ufline.vm");
+        Map<String, String> ufLineMap = getUFLineMap(ufFileLine);
+
+        Context context = new VelocityContext();
+        stringWriter.getBuffer().setLength(0);
+
+        for (Map.Entry<String, String> entry : ufLineMap.entrySet()) {
+            context.put(entry.getKey(), entry.getValue());
+        }
+
+        ufLineTemplate.merge(context, stringWriter);
+        return stringWriter;
+    }
+
     private StringWriter writeReqFileLine(ReqFileLine reqFileLine) {
         StringWriter stringWriter = new StringWriter();
         Template reqLineTemplate = ve.getTemplate("reqline.vm");
@@ -94,9 +118,10 @@ public class ReportWriter {
         ReportWriter.logger.debug(sb.toString());
     }
 
-    public void writeDeliveryTicket(ReqFile reqFile, String outFilePath) throws IOException{
+    public void writeDeliveryTicket(ReqFile reqFile, UFFile ufFile, String outFilePath) throws IOException{
         String currentTimeStamp = ReportWriter.dateFormat.format(Calendar.getInstance().getTime());
         List<ReqFileLine> reqFileLines = reqFile.getReqFileLines();
+        List<UFFileLine> ufFileLines = ufFile.getUFFileLines();
 
         int curPageNum = 0;
         StringBuilder sb = new StringBuilder();
@@ -108,6 +133,12 @@ public class ReportWriter {
                 sb.append(writeReqFileHeader(curPageNum, reqFile, currentTimeStamp).getBuffer());
             }
             sb.append(writeReqFileLine(reqFileLines.get(i)).getBuffer());
+        }
+
+        sb.append(writeUFFileHeader());
+
+        for (int i = 0; i < ufFileLines.size(); i++) {
+            sb.append(writeUFFileLine(ufFileLines.get(i)).getBuffer());
         }
 
         writeToFile(outFilePath, sb);
@@ -126,6 +157,19 @@ public class ReportWriter {
             return ReportWriter.padLeft(s, n);
         }
         return ReportWriter.padRight(s, n);
+    }
+
+    private Map<String, String> getUFLineMap(UFFileLine ufFileLine) {
+        Map<String, UFFileLineField> ufflfs = ufFileLine.getUFFileLineFields();
+        Map<String, String> ufFileLineFieldMap = new HashMap<>();
+
+        for (Map.Entry<String, UFFileLineField> entry: ufflfs.entrySet()) {
+            UFFileLineField ufflf = entry.getValue();
+            String ufflfValue = ufflf.getValue();
+
+            ufFileLineFieldMap.put(entry.getKey(), ufflf.toString());
+        }
+        return ufFileLineFieldMap;
     }
 
     private Map<String, String> getReqLineMap(ReqFileLine reqFileLine) {
