@@ -36,7 +36,10 @@ public class ReportWriter {
     final static int pageNumberWidth = 10;
     final static int timestampWidth = 19;
     private static final Charset ENCODING = StandardCharsets.UTF_8;
-    private static final int ufHeaderHeight = 6;
+    private static final int ufHeaderHeight = 5;
+    private static final int reqLineHeight = 4;
+    private static final int ufLineHeight = 3;
+    private static final int reqHeaderHeight = 15;
 
     private VelocityEngine ve = new VelocityEngine();
 
@@ -53,7 +56,6 @@ public class ReportWriter {
         Template headerTemplate = ve.getTemplate("header.vm");
         Map<String, String> headerMap;
 
-        // TODO - need to verify this is saved in the StringBuffer and not cleared by Template.merge()
         if (curPageNum != 1) {
             stringWriter.append("\f");
         }
@@ -124,23 +126,46 @@ public class ReportWriter {
         List<UFFileLine> ufFileLines = ufFile.getUFFileLines();
 
         int curPageNum = 0;
+        int curPageHeight = 0;
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < reqFileLines.size(); i++) {
 
             if (i % ReportWriter.reqLinesPerPage == 0) {
                 curPageNum += 1;
+                curPageHeight = 15;
+                logger.debug("curPageHeight = " + curPageHeight);
                 sb.append(writeReqFileHeader(curPageNum, reqFile, currentTimeStamp).getBuffer());
             }
             sb.append(writeReqFileLine(reqFileLines.get(i)).getBuffer());
+            curPageHeight += reqLineHeight;
+            logger.debug("curPageHeight = " + curPageHeight);
         }
-
-        sb.append(writeUFFileHeader());
 
         for (int i = 0; i < ufFileLines.size(); i++) {
+            if (i == 0) {
+                if (ufHeaderHeight + ufLineHeight + curPageHeight > pageHeight) {
+                    curPageNum += 1;
+                    curPageHeight = reqHeaderHeight;
+                    sb.append(writeReqFileHeader(curPageNum, reqFile, currentTimeStamp).getBuffer());
+                    logger.debug("curPageHeight = " + curPageHeight);
+                }
+                curPageHeight += ufHeaderHeight;
+                sb.append(writeUFFileHeader());
+                logger.debug("curPageHeight = " + curPageHeight);
+            }
+            if (curPageHeight + ufLineHeight > pageHeight) {
+                curPageNum += 1;
+                curPageHeight = reqHeaderHeight;
+                curPageHeight += ufHeaderHeight;
+                sb.append(writeReqFileHeader(curPageNum, reqFile, currentTimeStamp).getBuffer());
+                sb.append(writeUFFileHeader());
+                logger.debug("curPageHeight = " + curPageHeight);
+            }
             sb.append(writeUFFileLine(ufFileLines.get(i)).getBuffer());
+            curPageHeight += ufLineHeight;
+            logger.debug("curPageHeight = " + curPageHeight);
         }
-
         writeToFile(outFilePath, sb);
     }
 
