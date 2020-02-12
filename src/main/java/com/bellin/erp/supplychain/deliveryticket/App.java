@@ -19,18 +19,18 @@ public class App
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final String configFileName = "filelinefield.yaml";
     private static final String ufConfigFileName = "uffilelinefield.yaml";
-    private static final String INPUT_FILE_NAME = "D:\\ipaoutput\\DeliveryTicket\\whsdata-300CS-51858.csv";
-    private static final String UF_INPUT_FILE_NAME = "D:\\ipaoutput\\DeliveryTicket\\ufdata-300CS-51858.csv";
+    //private static final String INPUT_FILE_NAME = "D:\\ipaoutput\\DeliveryTicket\\whsdata-300CS-51858.csv";
+    //private static final String UF_INPUT_FILE_NAME = "D:\\ipaoutput\\DeliveryTicket\\ufdata-300CS-51858.csv";
 
     public static void main( String[] args )
     {
         App app = new App();
 
         try {
-            //String inputFileName = args[0];
-            //String ufInputFileName = args[1];
-            String inputFileName = App.INPUT_FILE_NAME;
-            String ufInputFileName = App.UF_INPUT_FILE_NAME;
+            String inputFileName = args[0];
+            String ufInputFileName = args[1];
+            //String inputFileName = App.INPUT_FILE_NAME;
+            //String ufInputFileName = App.UF_INPUT_FILE_NAME;
             App.logger.info("Processing: " + inputFileName);
             app.runit(inputFileName, ufInputFileName);
             App.logger.info("End: " + inputFileName);
@@ -76,9 +76,9 @@ public class App
 
         String outputFilePath = inputFilePath.replace("whsdata", "whsrpt").replace("csv", "txt");
 
-        ReportWriter rw = new ReportWriter();
+        ReportWriter rw = new ReportWriter(reqFile, ufFile);
         try {
-            rw.writeDeliveryTicket(reqFile, ufFile, outputFilePath);
+            rw.writeDeliveryTicket(outputFilePath);
         } catch (IOException e) {
             App.logger.error("Error writing delivery ticket", e);
             System.exit(1);

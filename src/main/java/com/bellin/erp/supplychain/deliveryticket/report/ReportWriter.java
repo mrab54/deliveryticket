@@ -42,8 +42,14 @@ public class ReportWriter {
     private static final int reqHeaderHeight = 15;
 
     private VelocityEngine ve = new VelocityEngine();
+    private ReqFile reqFile;
+    private UFFile ufFile;
 
-    public ReportWriter() {
+
+    public ReportWriter(ReqFile reqFile, UFFile ufFile) {
+        this.reqFile = reqFile;
+        this.ufFile = ufFile;
+
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "class,file");
         ve.setProperty(RuntimeConstants.SPACE_GOBBLING, "none");
         ve.setProperty("runtime.log.logsystem.log4j.logger", "VELLOGGER");
@@ -141,7 +147,7 @@ public class ReportWriter {
         ReportWriter.logger.debug(sb.toString());
     }
 
-    public void writeDeliveryTicket(ReqFile reqFile, UFFile ufFile, String outFilePath) throws IOException{
+    public void writeDeliveryTicket(String outFilePath) throws IOException{
         String currentTimeStamp = ReportWriter.dateFormat.format(Calendar.getInstance().getTime());
         List<ReqFileLine> reqFileLines = reqFile.getReqFileLines();
         List<UFFileLine> ufFileLines = ufFile.getUFFileLines();
@@ -170,7 +176,6 @@ public class ReportWriter {
                 }
                 curPageHeight += ufHeaderHeight;
                 sb.append(writeUFFileHeader());
-                logger.debug("curPageHeight = " + curPageHeight);
             }
             if (curPageHeight + ufLineHeight > pageHeight) {
                 curPageNum += 1;
@@ -239,12 +244,36 @@ public class ReportWriter {
                         reqFileLineFieldMap.put(entry.getKey(), ReportWriter.pad(rflfValue.substring(0, 5), rflf.getWidth(), rflf.getPad()));
                     }
                 }
+            } else if (entry.getKey().equals("FILLED_QTY")) {
+                logger.debug("HERE QUANTITY");
+                if (isItemUnfulfilled(rflfs.get("ITEM").getValue())) {
+                    logger.debug("item unfullfilled");
+                    reqFileLineFieldMap.put(entry.getKey(), pad("*" + rflfValue, rflf.getWidth(), rflf.getPad()));
+                }
+                else {
+                    reqFileLineFieldMap.put(entry.getKey(), rflf.toString());
+                    logger.debug("item not unfullfilled");
+                }
             } else {
                 reqFileLineFieldMap.put(entry.getKey(), rflf.toString());
             }
+
         }
 
         return reqFileLineFieldMap;
+    }
+
+    private boolean isItemUnfulfilled(String item) {
+        List<UFFileLine> ufFileLines = ufFile.getUFFileLines();
+
+        for (int i = 0; i < ufFileLines.size(); i++) {
+            UFFileLine ufFileLine = ufFileLines.get(i);
+
+            if (item.trim().equals(ufFileLine.getUFFileLineFields().get("UF_ITEM").getValue().trim())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Map<String, String> getHeaderMap(ReqFile reqFile, String currentTimeStamp, int pageNumber) {

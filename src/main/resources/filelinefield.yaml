@@ -136,7 +136,7 @@ USER_FIELD1:
   pad: "right"
 FILLED_QTY:
   type: "String"
-  width: 4
+  width: 5
   pad: "left"
 BACKORDER_QTY:
   type: "String"
