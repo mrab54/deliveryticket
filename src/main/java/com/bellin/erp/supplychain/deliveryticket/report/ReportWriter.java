@@ -51,6 +51,27 @@ public class ReportWriter {
         ve.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
         ve.init();
     }
+
+    private StringWriter writeReqFileHeaderNoLines(int curPageNum, ReqFile reqFile, String currentTimeStamp) {
+        StringWriter stringWriter = new StringWriter();
+        Template headerTemplate = ve.getTemplate("headernolines.vm");
+        Map<String, String> headerMap;
+
+        if (curPageNum != 1) {
+            stringWriter.append("\f");
+        }
+
+        headerMap = getHeaderMap(reqFile, currentTimeStamp, curPageNum);
+        Context context = new VelocityContext();
+
+        for (Map.Entry<String, String> entry : headerMap.entrySet()) {
+            context.put(entry.getKey(), entry.getValue());
+        }
+
+        headerTemplate.merge(context, stringWriter);
+        return stringWriter;
+    }
+
     private StringWriter writeReqFileHeader(int curPageNum, ReqFile reqFile, String currentTimeStamp) {
         StringWriter stringWriter = new StringWriter();
         Template headerTemplate = ve.getTemplate("header.vm");
@@ -134,12 +155,10 @@ public class ReportWriter {
             if (i % ReportWriter.reqLinesPerPage == 0) {
                 curPageNum += 1;
                 curPageHeight = 15;
-                logger.debug("curPageHeight = " + curPageHeight);
                 sb.append(writeReqFileHeader(curPageNum, reqFile, currentTimeStamp).getBuffer());
             }
             sb.append(writeReqFileLine(reqFileLines.get(i)).getBuffer());
             curPageHeight += reqLineHeight;
-            logger.debug("curPageHeight = " + curPageHeight);
         }
 
         for (int i = 0; i < ufFileLines.size(); i++) {
@@ -147,8 +166,7 @@ public class ReportWriter {
                 if (ufHeaderHeight + ufLineHeight + curPageHeight > pageHeight) {
                     curPageNum += 1;
                     curPageHeight = reqHeaderHeight;
-                    sb.append(writeReqFileHeader(curPageNum, reqFile, currentTimeStamp).getBuffer());
-                    logger.debug("curPageHeight = " + curPageHeight);
+                    sb.append(writeReqFileHeaderNoLines(curPageNum, reqFile, currentTimeStamp).getBuffer());
                 }
                 curPageHeight += ufHeaderHeight;
                 sb.append(writeUFFileHeader());
@@ -158,13 +176,11 @@ public class ReportWriter {
                 curPageNum += 1;
                 curPageHeight = reqHeaderHeight;
                 curPageHeight += ufHeaderHeight;
-                sb.append(writeReqFileHeader(curPageNum, reqFile, currentTimeStamp).getBuffer());
+                sb.append(writeReqFileHeaderNoLines(curPageNum, reqFile, currentTimeStamp).getBuffer());
                 sb.append(writeUFFileHeader());
-                logger.debug("curPageHeight = " + curPageHeight);
             }
             sb.append(writeUFFileLine(ufFileLines.get(i)).getBuffer());
             curPageHeight += ufLineHeight;
-            logger.debug("curPageHeight = " + curPageHeight);
         }
         writeToFile(outFilePath, sb);
     }
