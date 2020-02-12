@@ -146,3 +146,7 @@ PO_USER_FLD_4:
   type: "String"
   width: 20
   pad: "right"
+TRAN_UOM:
+  type: "String"
+  width: 4
+  pad: "right"
