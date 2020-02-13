@@ -138,10 +138,6 @@ FILLED_QTY:
   type: "String"
   width: 5
   pad: "left"
-BACKORDER_QTY:
-  type: "String"
-  width: 4
-  pad: "left"
 PO_USER_FLD_4:
   type: "String"
   width: 20
